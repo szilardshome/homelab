@@ -1,0 +1,10 @@
+proxmox_api_host: "10.10.2.10"
+proxmox_api_user: "ansible@pam"
+vms_to_snapshot:
+  - { vmid: 4001 }
+  - { vmid: 4002 }
+  - { vmid: 4003 }
+  - { vmid: 5001 }
+  - { vmid: 5002 }
+  - { vmid: 5003 }
+snapshot_base_name: "ansible_snap"

@@ -1,0 +1,30 @@
+- name: Create Snapshots for Specific Proxmox VMs
+  hosts: localhost
+  connection: local
+  gather_facts: yes
+  vars_files:
+    - vars/proxmox_config.yml
+    - vars/proxmox_secrets.yml
+  vars:
+    snapshot_timestamp: "{{ ansible_date_time.iso8601_basic_short }}"
+
+
+  tasks:
+    - name: Ensure target VMs exist and create snapshots
+      community.general.proxmox_snap:
+        api_host: "{{ proxmox_api_host }}"
+        api_user: "{{ proxmox_api_user }}"
+        api_token_id: "{{ proxmox_api_token_id | default(omit) }}"
+        api_token_secret: "{{ proxmox_api_token_secret | default(omit) }}"
+        validate_certs: false
+
+        vmid: "{{ item.vmid }}"
+        snapname: "{{ snapshot_base_name }}_{{ snapshot_timestamp }}"
+        description: "Automated snapshot via Ansible on {{ snapshot_timestamp }}"
+        state: present
+      loop: "{{ vms_to_snapshot }}"
+      register: snapshot_result
+
+    - name: Display snapshot results
+      ansible.builtin.debug:
+        var: snapshot_result.results
