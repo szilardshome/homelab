@@ -1,0 +1,51 @@
+- name: Update Proxmox VE Nodes
+  hosts: proxmox_nodes
+  become: yes # Ez továbbra is fontos, hogy az ansible_svc sudo jogosultságait használja
+  tasks:
+    - name: Update apt cache
+      ansible.builtin.apt:
+        update_cache: yes
+        cache_valid_time: 3600
+      tags:
+        - update
+        - packages
+
+    - name: Perform a distribution upgrade
+      ansible.builtin.apt:
+        upgrade: dist
+        autoremove: yes
+      tags:
+        - upgrade
+        - packages
+      register: apt_dist_upgrade
+
+    - name: Check if a reboot is required
+      ansible.builtin.stat:
+        path: /var/run/reboot-required
+      register: reboot_required_file
+      tags:
+        - reboot
+        - status
+
+    - name: Display reboot required message
+      ansible.builtin.debug:
+        msg: "Reboot is required on {{ inventory_hostname }} due to package upgrades."
+      when: reboot_required_file.stat.exists
+      tags:
+        - reboot
+        - status
+
+    # Optional: Task to reboot the node if required
+    # Be cautious with automated reboots in a production environment.
+    - name: Reboot the node if required
+      ansible.builtin.reboot:
+        msg: "Rebooting node after updates"
+        connect_timeout: 5
+        reboot_timeout: 600
+        pre_reboot_delay: 0
+        post_reboot_delay: 30
+        test_command: uptime
+      when: reboot_required_file.stat.exists
+      tags:
+        - reboot
+        - automated_reboot
