@@ -1,6 +1,6 @@
 - name: Update Proxmox VE Nodes
   hosts: proxmox_nodes
-  become: yes # Ez továbbra is fontos, hogy az ansible_svc sudo jogosultságait használja
+  become: yes
   tasks:
     - name: Update apt cache
       ansible.builtin.apt:
@@ -35,8 +35,6 @@
         - reboot
         - status
 
-    # Optional: Task to reboot the node if required
-    # Be cautious with automated reboots in a production environment.
     - name: Reboot the node if required
       ansible.builtin.reboot:
         msg: "Rebooting node after updates"
