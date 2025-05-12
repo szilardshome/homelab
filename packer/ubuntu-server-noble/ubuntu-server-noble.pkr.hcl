@@ -1,6 +1,4 @@
-# Ubuntu Server Noble (24.04.x)
-# ---
-# Packer Template to create an Ubuntu Server (Noble 24.04.x) on Proxmox
+# Packer Template to create an Ubuntu Server (Noble 24.04.2) on Proxmox
 
 # Variable Definitions
 variable "proxmox_api_url" {
@@ -28,26 +26,20 @@ variable "ubuntu_username" {
     sensitive = true
 }
 
-# Resource Definiation for the VM Template
 source "proxmox-iso" "ubuntu-server-noble" {
 
-    # Proxmox Connection Settingsclear
     proxmox_url = "${var.proxmox_api_url}"
     username = "${var.proxmox_api_token_id}"
     token = "${var.proxmox_api_token_secret}"
-    # (Optional) Skip TLS Verification
     insecure_skip_tls_verify = true
 
-    # VM General Settings
     node = "pve2"
     vm_id = "9999"
     vm_name = "k3s-master-template"
-    template_description = "Template for Ubuntu-K3S-Master-Node"
+    template_description = "Template for Ubuntu Server Noble"
 
-    # VM OS Settings
     # (Option 1) Local ISO File
     # iso_file = "local:iso/ubuntu-24.04-live-server-amd64.iso"
-    # - or -
     # (Option 2) Download ISO
     iso_url = "https://releases.ubuntu.com/noble/ubuntu-24.04.2-live-server-amd64.iso"
 
@@ -155,7 +147,4 @@ build {
     provisioner "shell" {
         inline = [ "sudo cp /tmp/99-pve.cfg /etc/cloud/cloud.cfg.d/99-pve.cfg" ]
     }
-
-    # Add additional provisioning scripts here
-    # ...
 }
