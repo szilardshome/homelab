@@ -61,4 +61,4 @@ To use these files, you will need:
 🙏 Thanks for stopping by! I hope you find this repository interesting or useful.
 
 Best regards,
-Szilárd Farkas
+Farkas Szilárd 
