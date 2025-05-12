@@ -38,14 +38,16 @@ source "proxmox-iso" "ubuntu-server-noble" {
     vm_name = "k3s-master-template"
     template_description = "Template for Ubuntu Server Noble"
 
-    # (Option 1) Local ISO File
-    # iso_file = "local:iso/ubuntu-24.04-live-server-amd64.iso"
-    # (Option 2) Download ISO
-    iso_url = "https://releases.ubuntu.com/noble/ubuntu-24.04.2-live-server-amd64.iso"
-
-    iso_checksum = "d6dab0c3a657988501b4bd76f1297c053df710e06e0c3aece60dead24f270b4d"
-    iso_storage_pool = "shared"
-    unmount_iso = true
+    # Define boot ISO options within a boot_iso block
+    boot_iso {
+        # (Option 1) Local ISO File
+        # iso_file = "local:iso/ubuntu-24.04-live-server-amd64.iso"
+        # (Option 2) Download ISO
+        iso_url = "https://releases.ubuntu.com/noble/ubuntu-24.04.2-live-server-amd64.iso"
+        iso_checksum = "d6dab0c3a657988501b4bd76f1297c053df710e06e0c3aece60dead24f270b4d"
+        iso_storage_pool = "shared"
+        unmount = true
+    }
 
     # VM System Settings
     qemu_agent = true
@@ -57,7 +59,7 @@ source "proxmox-iso" "ubuntu-server-noble" {
         disk_size = "15G"
         format = "raw"
         storage_pool = "shared"
-        storage_pool_type = "lvm"
+        # storage_pool_type is deprecated and removed
         type = "scsi"
         ssd = "true"
     }
