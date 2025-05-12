@@ -1,18 +1,11 @@
-# Ignore all .tfvars files to prevent committing sensitive data
 .tfvars.tf
-
-# Ignore Terraform state files
 *.tfstate
 *.tfstate.backup
 .terraform.tfstate.lock.info
-# Ignore Terraform crash log files
 crash.log
-
-# Ignore Terraform .terraform directory
 .terraform
-
-# Ignore Terraform .terraform.lock.hcl file
 .terraform.lock.hcl
-
 credentials.pkr.hcl
 downloaded_iso_path/
+.vscode/
+
