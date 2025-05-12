@@ -1,44 +1,64 @@
 # 🏡 My Homelab Configurations
 
-Hi there!
+👋 Hi there!
 
-I'm Szilárd Farkas, and I have a passion for building and tinkering with homelab environments! My enthusiasm lies in setting up and experimenting with various technologies in a home setting. This repository is my personal collection of configuration files for my homelab infrastructure.
+I'm Farkas Szilárd , and I have a huge passion for the **homelab** world! ❤️ My enthusiasm lies in building and experimenting with various technologies in a home setting. This repository is my personal collection of configuration files for my homelab infrastructure.
 
-If you have any questions or are looking for something specific, you can reach me here: szilard.farkas@szilardshome.com
-
-**What's Inside?**
-
-In this repository, you'll find my **Terraform** and **Packer** configurations used to manage my home laboratory setup. My primary goal is to automate deployment and management tasks, focusing particularly on creating base images and orchestrating containers.
-
-Currently, the configurations predominantly focus on:
-
-* **Proxmox VE:** This serves as the foundation of my virtualization environment. The Terraform code here is used for creating and configuring Virtual Machines (VMs). I also use **Packer** to build standardized VM images for Proxmox, ensuring consistency and speed when deploying new systems.
-* **Kubernetes (k3s):** My platform for running containerized applications. The Terraform configurations prepare the Proxmox VMs that act as the nodes for the k3s cluster (both masters and workers).
-* **1Password:** While not code stored directly here, 1Password is an essential part of my homelab security, used for securely managing secrets, passwords, and sensitive information required by these configurations (like API tokens or user credentials).
-
-The aim of this repository is to keep these files organized and potentially offer inspiration or a starting point for other homelab enthusiasts. By using Infrastructure as Code (IaC) with Terraform and image building with Packer, I can easily version, reproduce, and manage my lab setup efficiently and securely.
-
-**Repository Structure**
-
-You'll find the configuration files organized into folders, typically grouping related components together (e.g., `terraform/proxmox-k3s-cluster` might contain the files for deploying the Kubernetes VMs, and a `packer` directory might hold image-building templates). Look through the directories to find the specific configurations you're interested in.
-
-**Getting Started / Usage**
-
-These configurations are written for my specific homelab environment. If you wish to adapt and use them yourself, you will likely need to modify the variables (in `.tfvars` files or similar methods) to match your own Proxmox setup, IP addresses, network configuration, and other parameters.
-
-To use these files, you will need:
-
-1.  **Terraform:** Installed on your machine.
-2.  **Packer:** Installed on your machine (for image building).
-3.  **Proxmox Terraform Provider:** Configured to connect to your Proxmox VE instance.
-4.  A method for securely managing secrets (like **1Password**) that are referenced by the configurations.
-5.  Access to a Proxmox VE environment.
-
-Clone the repository, navigate to the desired configuration directory, update the variables, and run `terraform init`, `terraform plan`, and `terraform apply` (for Terraform) or `packer build` (for Packer templates).
+If you have any questions or are looking for something specific, feel free to reach out: 📧 szilard.farkas@szilardshome.com
 
 ---
 
-Thanks for stopping by! I hope you find this repository interesting or useful.
+✨ **What's Inside?**
+
+In this repository, you'll find my **Terraform** and **Packer** configurations used to manage my home laboratory setup. My main goal is to **automate** deployment and management tasks following **Infrastructure as Code (IaC)** principles.
+
+Currently, the configurations primarily focus on:
+
+* 💻 **Proxmox VE:** This serves as the foundation of my virtualization environment.
+    * I use **Terraform** code to create and configure Virtual Machines (VMs).
+    * I utilize **Packer** to build standardized, pre-configured VM images for Proxmox, which speeds up deployment and ensures consistency.
+
+* 🐳 **Kubernetes (k3s):** My lightweight platform for running containerized applications.
+    * The **Terraform** configurations prepare and set up the Proxmox VMs that function as the k3s cluster's **master** and **worker** nodes.
+
+* 🔐 **1Password:** Although not code stored directly here, 1Password is an essential part of my homelab security. I use it to securely manage sensitive data required by these configurations (e.g., API tokens, passwords, SSH keys).
+
+The purpose of this repository is to keep these files organized and potentially offer inspiration or serve as a starting point for other homelab enthusiasts. By using IaC with Terraform and image building with Packer, I can efficiently version, reproduce, and manage my lab setup reliably and securely.
+
+---
+
+📁 **Repository Structure**
+
+You will find the configuration files organized into folders, typically grouping related components:
+
+* `terraform/proxmox-k3s-cluster/`: Terraform files for deploying and configuring the k3s cluster VMs on Proxmox.
+* `packer/`: Packer templates for building base VM images.
+* ...and potentially other directories for future projects or tools.
+
+---
+
+🚀 **Getting Started / Usage**
+
+It's important to note that these configurations are tailored to my specific homelab environment. If you wish to adapt and use them yourself, you **must** modify the variables (e.g., in `.tfvars` files or via environment variables) to match your own Proxmox setup, IP addresses, network configuration, and other parameters.
+
+To use these files, you will need:
+
+* 🛠️ **Terraform:** Installed on your machine.
+* 🛠️ **Packer:** Installed on your machine (for image building).
+* 🔌 **Proxmox Terraform Provider:** Configured to communicate with your Proxmox VE server.
+* 🔑 A secure method for managing secrets (like **1Password** or another Vault solution).
+* 🖥️ Access to a Proxmox VE environment.
+
+**General Steps:**
+
+1.  Clone the repository.
+2.  Navigate to the specific configuration directory (e.g., `cd terraform/proxmox-k3s-cluster`).
+3.  Copy the example `.tfvars` file (if provided) or create your own, and **modify the variables** within it to match your environment.
+4.  Run the necessary commands (e.g., `` `terraform init` ``, `` `terraform plan` ``, `` `terraform apply` `` for Terraform, or `` `packer build <template.json>` `` for Packer templates).
+
+---
+
+🙏 Thanks for stopping by! I hope you find this repository interesting or useful.
 
 Best regards,
 Szilárd Farkas
