@@ -11,7 +11,7 @@ spec:
         repoURL: https://github.com/szilardshome/homelab
         revision: HEAD
         directories:
-          - path: infrastructure/*/*
+          - path: kubernetes/szilardshome/infrastructure/*/*
   template:
     metadata:
       name: 'infra-{{path.basename}}'
