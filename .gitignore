@@ -8,4 +8,5 @@ crash.log
 credentials.pkr.hcl
 downloaded_iso_path/
 .vscode/
-
+1password-credentials.json
+kubernetes/szilardshome/infrastructure/controllers/argocd/charts

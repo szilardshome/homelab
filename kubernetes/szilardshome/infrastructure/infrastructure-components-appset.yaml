@@ -1,0 +1,44 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: infrastructure-components
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "-2"
+spec:
+  generators:
+    - git:
+        repoURL: https://github.com/szilardshome/homelab
+        revision: HEAD
+        directories:
+          - path: infrastructure/*/*
+  template:
+    metadata:
+      name: 'infra-{{path.basename}}'
+      labels:
+        type: infrastructure
+    spec:
+      project: infrastructure
+      source:
+        plugin:
+          name: kustomize-build-with-helm
+        repoURL: https://github.com/szilardshome/homelab
+        targetRevision: HEAD
+        path: '{{path}}'
+      destination:
+        server: https://kubernetes.default.svc
+        # Use the application name as the namespace, which should be defined in its kustomization.yaml
+        namespace: '{{path.basename}}'
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        retry:
+          limit: 5
+          backoff:
+            duration: 5s
+            factor: 2
+            maxDuration: 3m
+        syncOptions:
+          - CreateNamespace=true
+          - ServerSideApply=true
