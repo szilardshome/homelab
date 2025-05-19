@@ -4,15 +4,14 @@ metadata:
   name: infrastructure-components
   namespace: argocd
   annotations:
-    argocd.argoproj.io/sync-wave: "-2"
+
 spec:
   generators:
     - git:
-        repoURL: https://github.com/szilardshome/homelab
+        repoURL: https://github.com/mitchross/k3s-argocd-proxmox
         revision: HEAD
         directories:
-        #  - path: kubernetes/szilardshome/infrastructure/networking/cilium/*
-          - path: kubernetes/szilardshome/infrastructure/*/*
+          - path: kubernetes/szilardshome/infrastructure/controllers/argocd/*
   template:
     metadata:
       name: 'infra-{{path.basename}}'
@@ -23,7 +22,7 @@ spec:
       source:
         plugin:
           name: kustomize-build-with-helm
-        repoURL: https://github.com/szilardshome/homelab
+        repoURL: https://github.com/mitchross/k3s-argocd-proxmox
         targetRevision: HEAD
         path: '{{path}}'
       destination:

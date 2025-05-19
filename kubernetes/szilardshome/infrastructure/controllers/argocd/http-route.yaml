@@ -7,7 +7,7 @@ spec:
     - name: gateway-internal
       namespace: gateway
   hostnames:
-  - "argocd.szilardshome.com"
+  - "argocd-local.szilardshome.com"
   rules:
   - matches:
     - path:
