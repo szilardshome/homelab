@@ -1,0 +1,21 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: traefik-crds
+  namespace: argocd 
+spec:
+  destination:
+    namespace: traefik 
+    server: https://kubernetes.default.svc
+  project: infrastructure # Vagy a te ArgoCD projekted
+  source:
+    chart: traefik-crds
+    repoURL: https://traefik.github.io/charts
+    targetRevision: 1.8.0
+  syncPolicy:
+    automated:
+      allowEmpty: true 
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=false 

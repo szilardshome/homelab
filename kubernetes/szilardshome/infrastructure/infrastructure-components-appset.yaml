@@ -8,7 +8,7 @@ metadata:
 spec:
   generators:
     - git:
-        repoURL: https://github.com/mitchross/k3s-argocd-proxmox
+        repoURL: https://github.com/szilardshome/homelab
         revision: HEAD
         directories:
           - path: kubernetes/szilardshome/infrastructure/networking/*
@@ -24,7 +24,7 @@ spec:
       source:
         plugin:
           name: kustomize-build-with-helm
-        repoURL: https://github.com/mitchross/k3s-argocd-proxmox
+        repoURL: https://github.com/szilardshome/homelab
         targetRevision: HEAD
         path: '{{path}}'
       destination:
