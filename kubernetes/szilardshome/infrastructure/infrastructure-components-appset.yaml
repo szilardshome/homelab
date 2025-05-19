@@ -11,7 +11,8 @@ spec:
         repoURL: https://github.com/szilardshome/homelab
         revision: HEAD
         directories:
-          - path: kubernetes/szilardshome/infrastructure/*/*
+          - path: kubernetes/szilardshome/infrastructure/networking/cilium/*
+        #  - path: kubernetes/szilardshome/infrastructure/*/*
   template:
     metadata:
       name: 'infra-{{path.basename}}'
