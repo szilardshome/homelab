@@ -56,6 +56,6 @@ service:
   annotations: {}
   labels: {}
   spec:
-    loadBalancerIP: 10.10.40.60 # this should be an IP in the MetalLB range
+    loadBalancerIP: 10.10.4.60 # this should be an IP in the MetalLB range
   loadBalancerSourceRanges: []
   externalIPs: []
