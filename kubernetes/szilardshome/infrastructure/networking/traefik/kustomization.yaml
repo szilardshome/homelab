@@ -6,3 +6,14 @@ resources:
   - ns.yaml
   - crds.yaml
   - app.yaml
+
+helmCharts:
+  - name: traefik                       # A Helm chart neve
+    repo: https://traefik.github.io/charts # A chart repository URL-je
+    version: 35.3.0                      # A chart verziója
+    releaseName: traefik                
+    namespace: traefik                   # A névtér, ahova a chart települ
+    valuesFile: values.yaml              
+    includeCRDs: true  
+
+
