@@ -4,8 +4,6 @@ kind: Kustomization
 # Azoknak az erőforrásfájloknak a listája, amelyeket a Kustomize feldolgoz
 resources:
   - ns.yaml
-  - crds.yaml
-  - app.yaml
 
 helmCharts:
   - name: traefik                       # A Helm chart neve
