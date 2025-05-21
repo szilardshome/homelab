@@ -1,0 +1,7 @@
+replicaCount: 3
+serviceAccount:
+  create: true
+certController:
+  create: false
+webhook:
+  create: false
