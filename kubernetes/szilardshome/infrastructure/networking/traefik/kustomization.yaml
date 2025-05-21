@@ -5,7 +5,7 @@ kind: Kustomization
 resources:
   - ns.yaml
   - ds-ingress.yaml
-  - middlware.yaml
+  - middleware.yaml
 
 helmCharts:
   - name: traefik                       # A Helm chart neve
