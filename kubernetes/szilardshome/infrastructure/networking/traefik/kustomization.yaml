@@ -4,6 +4,8 @@ kind: Kustomization
 # Azoknak az erőforrásfájloknak a listája, amelyeket a Kustomize feldolgoz
 resources:
   - ns.yaml
+  - ds-ingress.yaml
+  - middlware.yaml
 
 helmCharts:
   - name: traefik                       # A Helm chart neve
