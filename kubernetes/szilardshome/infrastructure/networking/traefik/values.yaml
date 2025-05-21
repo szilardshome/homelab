@@ -29,7 +29,7 @@ ports:
       
 ingressRoute:
   dashboard:
-    enabled: false
+    enabled: true
 
 kubernetesGateway:
   gatewayClass:
