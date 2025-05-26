@@ -4,3 +4,5 @@ resources:
   - app-1password-connect.yaml
   - app-external-secrets-operator.yaml
   - cluster-secret-store.yaml
+  - test-secret.yaml
+  
