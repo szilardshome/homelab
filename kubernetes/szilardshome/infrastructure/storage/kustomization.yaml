@@ -1,0 +1,7 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+commonLabels:
+  szilardshome: storage
+  app.kubernetes.io/managed-by: argocd
+resources:
+  - longhorn
