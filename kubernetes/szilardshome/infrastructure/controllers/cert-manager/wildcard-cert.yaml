@@ -1,0 +1,14 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: "szilardshome-wildcard-certificate"
+  namespace: "cert-manager"
+spec:
+  secretName: "szilardshome-tls"
+  issuerRef:
+    name: "cloudflare-cluster-issuer"
+    kind: ClusterIssuer
+  commonName: "szilardshome.com"
+  dnsNames:
+  - "szilardshome.com"
+  - "*.szilardshome.com"
