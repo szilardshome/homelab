@@ -3,7 +3,11 @@ kind: Kustomization
 
 resources:
   - namespace.yaml
-  - ingress.yaml
+  - desh-ingress.yaml
+  - dash-middleware.yaml
+  - dash-secret.yaml
+  - default-headers.yaml
+  
 
 helmCharts:
   - name: traefik
