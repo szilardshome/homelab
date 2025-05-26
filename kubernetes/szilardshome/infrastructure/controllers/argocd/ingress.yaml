@@ -14,15 +14,5 @@ spec:
       services:
         - name: argocd-server
           port: 8080
-    - match: Host(`argocd-local.szilardshomelab.com`) # change to your domain
-      kind: Rule
-      services:
-        - name: argocd-server
-          port: 8080
-    - match: Host(`argocd.szilardshomelab.com`) # change to your domain
-      kind: Rule
-      services:
-        - name: argocd-server
-          port: 8080
       # middlewares:
       #   - name: default-headers
