@@ -1,6 +1,0 @@
-connect:
-  create: true
-
-  # The number of replicas to run the 1Password Connect deployment
-  replicas: 3
-  serviceType: ClusterIP
