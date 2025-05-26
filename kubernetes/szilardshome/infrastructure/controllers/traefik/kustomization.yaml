@@ -4,10 +4,10 @@ kind: Kustomization
 resources:
   - namespace.yaml
   - desh-ingress.yaml
-  - dash-middleware.yaml
-  - dash-secret.yaml
+  - desh-middleware.yaml
+  - desh-secret.yaml
   - default-headers.yaml
-  
+
 
 helmCharts:
   - name: traefik
