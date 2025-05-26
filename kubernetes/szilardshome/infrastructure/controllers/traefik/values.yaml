@@ -60,4 +60,4 @@ service:
 tlsStore:
   default:
     defaultCertificate:
-      secretName: "szilardshome-wildcard-certificate" # The secret created by cert-manager
+      secretName: "szilardshome-tls" # The secret created by cert-manager
