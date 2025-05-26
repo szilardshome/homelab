@@ -4,42 +4,40 @@ globalArguments:
 
 additionalArguments:
   - "--serversTransport.insecureSkipVerify=true"
-  - "--log.level=INFO" 
+  - "--log.level=INFO"
 
 deployment:
   enabled: true
   replicas: 3
+  annotations: {}
+  podAnnotations: {}
+  additionalContainers: []
+  initContainers: []
 
-entryPoints:
-  web: # HTTP
-    address: ":8000"
-    http:
-      redirections:
-        entryPoint:
-          to: websecure
-          scheme: https
-          permanent: true
-  websecure: # HTTPS
-    address: ":8443"
-    http:
-      tls:
-        enabled: true
-
-ingressClass:
-  enabled: true
-  name: "traefik-external" 
-  isDefaultClass: true
-
+ports:
+  web:
+    redirections:
+      entrypoint:
+        to: websecure
+        priority: 10
+  websecure:
+    http3:
+      enabled: true
+    advertisedPort: 4443
+    tls:
+      enabled: true
+      
 ingressRoute:
   dashboard:
     enabled: false
 
 providers:
   kubernetesCRD:
-    enabled: true 
+    enabled: true
+    ingressClass: traefik-external
     allowExternalNameServices: true
   kubernetesIngress:
-    enabled: true 
+    enabled: true
     allowExternalNameServices: true
     publishedService:
       enabled: false
@@ -50,14 +48,9 @@ rbac:
 service:
   enabled: true
   type: LoadBalancer
-  annotations: {} 
+  annotations: {}
   labels: {}
   spec:
-    loadBalancerIP: "10.10.4.70"
+    loadBalancerIP: 10.10.4.70 # this should be an IP in the MetalLB range
   loadBalancerSourceRanges: []
   externalIPs: []
-
-tlsStore:
-  default:
-    defaultCertificate:
-      secretName: "szilardshome-tls" # The secret created by cert-manager
