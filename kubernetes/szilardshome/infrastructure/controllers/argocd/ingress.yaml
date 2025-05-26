@@ -9,7 +9,7 @@ spec:
   entryPoints:
     - websecure
   routes:
-    - match: Host(`argocd-local.szilardshomelab.com`) # change to your domain
+    - match: Host(`argocd-local.szilardshome.com`) # change to your domain
       kind: Rule
       services:
         - name: argocd-server
