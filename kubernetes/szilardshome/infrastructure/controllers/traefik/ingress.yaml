@@ -17,5 +17,5 @@ spec:
       services:
         - name: api@internal
           kind: TraefikService
-tls:
-  secretName: szilardshome-tls
+  tls:
+    secretName: szilardshome-tls
