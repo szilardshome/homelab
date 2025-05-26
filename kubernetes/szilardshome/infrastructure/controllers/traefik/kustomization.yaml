@@ -3,9 +3,9 @@ kind: Kustomization
 
 resources:
   - namespace.yaml
-  - desh-ingress.yaml
-  - desh-middleware.yaml
-  - desh-secret.yaml
+  - dash-ingress.yaml
+  - dash-middleware.yaml
+  - dash-secret.yaml
   - default-headers.yaml
 
 
