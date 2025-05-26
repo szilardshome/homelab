@@ -3,6 +3,7 @@ kind: Kustomization
 
 resources:
   - namespace.yaml
+  - ingress.yaml
 
 helmCharts:
   - name: traefik
@@ -12,4 +13,3 @@ helmCharts:
     namespace: traefik
     valuesFile: values.yaml
     includeCRDs: true
-    
