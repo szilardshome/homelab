@@ -1,0 +1,63 @@
+globalArguments:
+  - "--global.sendanonymoususage=false"
+  - "--global.checknewversion=false"
+
+additionalArguments:
+  - "--serversTransport.insecureSkipVerify=true"
+  - "--log.level=INFO" 
+
+deployment:
+  enabled: true
+  replicas: 3
+
+entryPoints:
+  web: # HTTP
+    address: ":8000"
+    http:
+      redirections:
+        entryPoint:
+          to: websecure
+          scheme: https
+          permanent: true
+  websecure: # HTTPS
+    address: ":8443"
+    http:
+      tls:
+        enabled: true
+
+ingressClass:
+  enabled: true
+  name: "traefik-external" 
+  isDefaultClass: true
+
+ingressRoute:
+  dashboard:
+    enabled: false
+
+providers:
+  kubernetesCRD:
+    enabled: true 
+    allowExternalNameServices: true
+  kubernetesIngress:
+    enabled: true 
+    allowExternalNameServices: true
+    publishedService:
+      enabled: false
+
+rbac:
+  enabled: true
+
+service:
+  enabled: true
+  type: LoadBalancer
+  annotations: {} 
+  labels: {}
+  spec:
+    loadBalancerIP: "10.10.4.70"
+  loadBalancerSourceRanges: []
+  externalIPs: []
+
+tlsStore:
+  default:
+    defaultCertificate:
+      secretName: "szilardshome-wildcard-certificate" # The secret created by cert-manager
