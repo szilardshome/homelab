@@ -4,7 +4,7 @@ globalArguments:
 
 additionalArguments:
   - "--serversTransport.insecureSkipVerify=true"
-  - "--log.level=INFO"
+  - "--log.level=DEBUG"
 
 deployment:
   enabled: true
@@ -29,12 +29,7 @@ ports:
       
 ingressRoute:
   dashboard:
-    enabled: true
-
-kubernetesGateway:
-  gatewayClass:
-    enabled: true 
-    name: traefik
+    enabled: false
 
 providers:
   kubernetesCRD:
@@ -56,6 +51,6 @@ service:
   annotations: {}
   labels: {}
   spec:
-    loadBalancerIP: 10.10.4.60 # this should be an IP in the MetalLB range
+    loadBalancerIP: 10.10.4.70 # this should be an IP in the MetalLB range
   loadBalancerSourceRanges: []
   externalIPs: []
