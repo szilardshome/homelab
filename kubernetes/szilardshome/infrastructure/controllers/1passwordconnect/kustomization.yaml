@@ -5,6 +5,7 @@ namespace: 1passwordconnect
 
 resources:
   - namespace.yaml
+  - test-secret.yaml
 
 helmCharts:
   - name: connect
