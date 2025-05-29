@@ -7,7 +7,7 @@ spec:
   parentRefs:
     - name: gateway-internal
       namespace: traefik
-      sectionName: https-internal 
+      sectionName: websecure
   hostnames:
     - "traefik-local.szilardshome.com" 
   rules:
