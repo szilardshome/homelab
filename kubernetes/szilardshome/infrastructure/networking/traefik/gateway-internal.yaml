@@ -8,14 +8,14 @@ spec:
   listeners:
     - name: web
       protocol: HTTP
-      port: 8000
+      port: 80
       hostname: "*.szilardshome.com"
       allowedRoutes:
         namespaces:
           from: All
     - name: websecure
       protocol: HTTPS
-      port: 8443
+      port: 443
       hostname: "*.szilardshome.com"
       allowedRoutes:
         namespaces:
