@@ -5,7 +5,8 @@ resources:
   - namespace.yaml
   - cloudflare-external-secret.yaml
   - cluster-issuer.yaml
-  - wildcard-cert.yaml
+  - tls-internal-cert.yaml
+  - tls-external-cert.yaml
 
 
 helmCharts:

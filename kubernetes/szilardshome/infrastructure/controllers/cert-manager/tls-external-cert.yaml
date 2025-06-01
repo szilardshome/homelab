@@ -1,10 +1,10 @@
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
-  name: "szilardshome-wildcard-certificate"
+  name: "tls-external-cert"
   namespace: "traefik"
 spec:
-  secretName: "szilardshome-tls"
+  secretName: "tls-external-cert"
   issuerRef:
     name: "cloudflare-cluster-issuer"
     kind: ClusterIssuer
