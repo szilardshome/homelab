@@ -43,7 +43,6 @@ providers:
     enabled: true
 
 gateway:
-  enabled: true # Ensure the gateway itself is enabled if not already explicitly set
   listeners:
     web:
       port: 8000 
