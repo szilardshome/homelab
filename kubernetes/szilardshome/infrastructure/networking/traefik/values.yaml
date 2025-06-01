@@ -41,13 +41,13 @@ providers:
 
   kubernetesGateway:
     enabled: true
-    
-gateway:
-  listeners:
-    web:
-      namespacePolicy: All
-    websecure:
-      namespacePolicy: All
+
+# gateway:
+#   listeners:
+#     web:
+#       namespacePolicy: All
+#     websecure:
+#       namespacePolicy: All
 
 rbac:
   enabled: true
