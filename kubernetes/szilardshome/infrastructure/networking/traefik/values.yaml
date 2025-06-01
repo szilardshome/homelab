@@ -1,63 +1,16 @@
-# Globális és további argumentumok változatlanok maradnak
-globalArguments:
-  - "--global.sendanonymoususage=false"
-  - "--global.checknewversion=false"
-
-additionalArguments:
-  - "--serversTransport.insecureSkipVerify=true"
-  - "--log.level=DEBUG"
-
-deployment:
-  enabled: true
-  replicas: 3
-  annotations: {}
-  podAnnotations: {}
-  additionalContainers: []
-  initContainers: []
-
-ports:
-  web:
-    redirections:
-      entrypoint:
-        to: websecure 
-        scheme: https
-        priority: 10
-  websecure:
-    http3:
-      enabled: true
-    advertisedPort: 4443 
-    tls:
-      enabled: true
-
-ingressRoute:
-  dashboard:
-    enabled: false 
-
+## File values.yaml ##
 providers:
-  kubernetesCRD:
-    enabled: true
+  # Disable the Ingress provider (optional)
+  # We do not want to use Ingress objects anymore!
   kubernetesIngress:
     enabled: false
-
+  # Enable the GatewayAPI provider
   kubernetesGateway:
     enabled: true
-
+# Allow the Gateway to expose HTTPRoute from all namespaces
 gateway:
   listeners:
     web:
-      port: 8000 
       namespacePolicy: All
     websecure:
-      port: 8443
       namespacePolicy: All
-
-rbac:
-  enabled: true
-
-service:
-  enabled: true 
-  type: ClusterIP
-  annotations: {}
-  labels: {}
-  loadBalancerSourceRanges: []
-  externalIPs: []
