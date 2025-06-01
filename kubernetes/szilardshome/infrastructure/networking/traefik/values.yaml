@@ -12,7 +12,9 @@ gateway:
   listeners:
     web:
       port: 8000
+      protocol: HTTP  # <--- Add this line
       namespacePolicy: All
     websecure:
       port: 8443
+      protocol: HTTPS # <--- Add this line
       namespacePolicy: All
