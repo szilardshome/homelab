@@ -1,0 +1,59 @@
+# Globális és további argumentumok változatlanok maradnak
+globalArguments:
+  - "--global.sendanonymoususage=false"
+  - "--global.checknewversion=false"
+
+additionalArguments:
+  - "--serversTransport.insecureSkipVerify=true"
+  - "--log.level=DEBUG"
+
+deployment:
+  enabled: true
+  replicas: 3
+  annotations: {}
+  podAnnotations: {}
+  additionalContainers: []
+  initContainers: []
+
+ports:
+  web:
+    redirections:
+      entrypoint:
+        to: websecure 
+        scheme: https
+        priority: 10
+  websecure:
+    http3:
+      enabled: true
+    advertisedPort: 4443 
+    tls:
+      enabled: true
+
+ingressRoute:
+  dashboard:
+    enabled: false 
+
+providers: 
+  kubernetesIngress:
+    enabled: false
+
+  kubernetesGateway:
+    enabled: true
+    
+gateway:
+  listeners:
+    web:
+      namespacePolicy: All
+    websecure:
+      namespacePolicy: All
+
+rbac:
+  enabled: true
+
+service:
+  enabled: true 
+  type: ClusterIP
+  annotations: {}
+  labels: {}
+  loadBalancerSourceRanges: []
+  externalIPs: []
