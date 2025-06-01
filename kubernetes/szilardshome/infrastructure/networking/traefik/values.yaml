@@ -33,14 +33,19 @@ ingressRoute:
   dashboard:
     enabled: false 
 
-providers:
-  kubernetesCRD:
-    enabled: false 
+providers: 
   kubernetesIngress:
     enabled: false
 
   kubernetesGateway:
     enabled: true
+    
+gateway:
+  listeners:
+    web:
+      namespacePolicy: All
+    websecure:
+      namespacePolicy: All
 
 rbac:
   enabled: true
