@@ -46,10 +46,10 @@ gateway:
   enabled: true # Ensure the gateway itself is enabled if not already explicitly set
   listeners:
     web:
-      port: 80 # 🎯 **ADD THIS LINE**
+      port: 8000 
       namespacePolicy: All
     websecure:
-      port: 443 # 🎯 **ADD THIS LINE**
+      port: 8443
       namespacePolicy: All
 
 rbac:
