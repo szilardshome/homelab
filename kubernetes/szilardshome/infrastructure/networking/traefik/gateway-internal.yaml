@@ -26,6 +26,6 @@ spec:
           - kind: Secret
             name: tls-internal-cert
             group: ""
-addresses:
-  - type: IPAddress
-    value: 10.10.4.70
+  addresses:
+    - type: IPAddress
+      value: 10.10.4.70
