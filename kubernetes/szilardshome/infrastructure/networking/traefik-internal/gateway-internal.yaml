@@ -4,7 +4,7 @@ metadata:
   name: gateway-internal
   namespace: traefik 
 spec:
-  gatewayClassName: traefik
+  gatewayClassName: traefik-internal-class
   listeners:
     - name: web
       protocol: HTTP
