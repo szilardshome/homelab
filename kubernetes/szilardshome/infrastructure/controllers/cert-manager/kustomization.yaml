@@ -3,7 +3,6 @@ kind: Kustomization
 
 resources:
   - namespace.yaml
-  - namespace2.yaml
   - cloudflare-external-secret.yaml
   - cluster-issuer.yaml
   - tls-internal-cert.yaml
