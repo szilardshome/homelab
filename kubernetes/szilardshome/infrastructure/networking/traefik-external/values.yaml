@@ -49,8 +49,8 @@ gatewayClass:  # @schema additionalProperties: false
   # -- When providers.kubernetesGateway.enabled and gateway.enabled, deploy a default gatewayClass
   enabled: true
   # -- Set a custom name to GatewayClass
-  name: "traefik-internal-class"
-  
+  name: "traefik-external-class"
+
 service:
   enabled: true
   type: LoadBalancer
