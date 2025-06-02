@@ -25,7 +25,7 @@ spec:
         certificateRefs:
           - kind: Secret
             name: tls-external-cert
-            # group: ""
+            group: ""
   addresses:
     - type: IPAddress
       value: 10.10.4.71
