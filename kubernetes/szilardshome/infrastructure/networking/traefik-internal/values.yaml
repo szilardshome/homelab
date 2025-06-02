@@ -40,6 +40,10 @@ providers:
   kubernetesGateway:
     enabled: true
 
+gatewayClass:  # @schema additionalProperties: false
+  # -- When providers.kubernetesGateway.enabled and gateway.enabled, deploy a default gatewayClass
+  enabled: false
+
 service:
   enabled: true
   type: LoadBalancer
