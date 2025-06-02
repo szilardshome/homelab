@@ -43,7 +43,7 @@ providers:
   kubernetesIngress:
     enabled: false                         
   kubernetesGateway:
-    enabled: true                          
+    enabled: false                          
 
 # ----- Gateway -----
 gateway:
