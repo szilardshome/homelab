@@ -3,8 +3,7 @@ kind: Kustomization
 
 resources:
   - httproute.yaml
-  - gatewayclass.yaml
-  - gateway-external.yaml
+  
 helmCharts:
   - name: traefik
     repo: https://traefik.github.io/charts

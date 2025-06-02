@@ -3,8 +3,6 @@ kind: Kustomization
 
 resources:
   - httproute.yaml
-  - gatewayclass.yaml
-  - gateway-internal.yaml
 
 helmCharts:
   - name: traefik

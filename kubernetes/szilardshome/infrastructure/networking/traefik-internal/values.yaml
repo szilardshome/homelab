@@ -71,9 +71,9 @@ gateway:
           kind: Secret                     
 
 # ----- GatewayClass  -----
-# gatewayClass:
-#   enabled: true
-#   name: "traefik-internal-class" 
+gatewayClass:
+  enabled: true
+  name: "traefik-internal-class" 
 
 # ----- Service -----
 service:
