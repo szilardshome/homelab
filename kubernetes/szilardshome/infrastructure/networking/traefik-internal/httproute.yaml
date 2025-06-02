@@ -5,7 +5,7 @@ metadata:
   namespace: traefik
 spec:
   parentRefs:
-    - name: gateway-internal
+    - name: gateway-traefik-internal
       namespace: traefik
       sectionName: websecure
   hostnames:
