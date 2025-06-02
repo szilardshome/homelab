@@ -68,7 +68,7 @@ gateway:
       certificateRefs:                    
         - name: tls-internal-cert          
           kind: Secret                     
-
+          namespace: cert-manager
 # ----- GatewayClass  -----
 gatewayClass:
   enabled: true
