@@ -38,20 +38,19 @@ providers:
     enabled: true
 
 gateway:
-  enabled: true
-  name: "gateway-traefik-internal" 
-
-  listeners:
-    - name: web
+  enabled: true 
+  name: "gateway-traefik-internal"
+  listeners: # Objektum (map), nem lista!
+    web: # A listener neve a kulcs
       protocol: HTTP
       port: 8000
       hostname: "*.szilardshome.com"
       allowedRoutes:
         namespaces:
           from: All
-    - name: websecure
+    websecure:
       protocol: HTTPS
-      port: 8443 
+      port: 8443
       hostname: "*.szilardshome.com"
       allowedRoutes:
         namespaces:
@@ -61,7 +60,6 @@ gateway:
         certificateRefs:
           - kind: Secret
             name: tls-internal-cert
-            
 gatewayClass: 
   enabled: true
   name: "traefik-internal-class"
