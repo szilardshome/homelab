@@ -64,7 +64,8 @@ gateway:
       allowedRoutes:
         namespaces:
           from: "All"
-      mode: Terminate                     
+      mode: Terminate       
+      namespacePolicy: All              
       certificateRefs:                    
         - name: tls-internal-cert          
           kind: Secret                     
