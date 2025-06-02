@@ -74,7 +74,10 @@ gatewayClass:
 
 rbac:
   enabled: true
-
+experimental:
+  kubernetesGateway:
+    # -- Enable traefik experimental GatewayClass CRD
+    enabled: true
 # ----- Service -----
 service:
   enabled: true
