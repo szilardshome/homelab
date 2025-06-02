@@ -3,7 +3,6 @@ globalArguments:
   - "--global.checknewversion=false"
 
 additionalArguments:
-  - "--providers.kubernetesgateway.controllername=szilardshome.com/traefik-gc-internal"
   - "--serversTransport.insecureSkipVerify=true"
   - "--log.level=DEBUG"                        
 
@@ -44,7 +43,8 @@ providers:
   kubernetesIngress:
     enabled: false                         
   kubernetesGateway:
-    enabled: false                          
+    enabled: true
+    controllerName: "szilardshome.com/traefik-gc-internal"                      
 
 # ----- Gateway -----
 gateway:
