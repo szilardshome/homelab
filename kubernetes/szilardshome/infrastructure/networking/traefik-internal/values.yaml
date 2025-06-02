@@ -1,88 +1,78 @@
-# ----- Globális és További Argumentumok -----
 globalArguments:
   - "--global.sendanonymoususage=false"
   - "--global.checknewversion=false"
 
 additionalArguments:
-  - "--serversTransport.insecureSkipVerify=true" # Figyelem: Biztonsági kockázat! Csak ha feltétlenül szükséges.
-  - "--log.level=DEBUG"                         # Hibakereséshez; élesben INFO vagy WARN javasolt.
+  - "--serversTransport.insecureSkipVerify=true"
+  - "--log.level=DEBUG"                        
 
 # ----- Deployment -----
 deployment:
   enabled: true
-  kind: Deployment # Alapértelmezett, de maradhat a kontextus miatt
-  replicas: 3      # Az általad preferált replicas szám
+  kind: Deployment 
+  replicas: 3      
 
-# ----- Portok (Traefik Entrypoints konfigurációja) -----
+# ----- Portok (Traefik Entrypoints) -----
 ports:
   web:
-    port: 8000                             # Traefik pod ezen a porton figyel (HTTP)
-    exposedPort: 80                        # Service ezen a porton teszi közzé (HTTP)
+    port: 8000                             
+    exposedPort: 80                        
     redirections:
       entryPoint:
-        to: "websecure"                    # Átirányítás a websecure entrypointra
-        scheme: "https"                    # HTTPS sémára
-        permanent: true                    # Állandó (301/308) átirányítás
+        to: "websecure"                    
+        scheme: "https"                    
+        permanent: true                    
   websecure:
-    port: 8443                             # Traefik pod ezen a porton figyel (HTTPS)
-    exposedPort: 4443                      # Service ezen a porton teszi közzé (az advertisedPort miatt)
-    advertisedPort: 4443                   # Az általad kívánt hirdetett port
+    port: 8443                            
+    exposedPort: 4443                      
+    advertisedPort: 4443                   
     tls:
-      enabled: true                        # TLS engedélyezése ezen a Traefik entrypoint-on
+      enabled: true                       
     http3:
-      enabled: true                        # HTTP/3 engedélyezése
+      enabled: true                        
 
-# ----- IngressRoute (Dashboard letiltva) -----
+# ----- IngressRoute (Dashboard disabled) -----
 ingressRoute:
   dashboard:
     enabled: false
 
-# ----- Providerek -----
+# ----- Providers -----
 providers:
   kubernetesCRD:
-    enabled: true                          # CRD-k (IngressRoute, Middleware stb.) használatához
+    enabled: true                          
   kubernetesIngress:
-    enabled: false                         # Kubernetes Ingress letiltva
+    enabled: false                         
   kubernetesGateway:
-    enabled: true                          # Gateway API engedélyezve
+    enabled: true                          
 
-# ----- Gateway Erőforrás (Helm chart hozza létre) -----
-# A Helm chart `values.yaml` struktúrája alapján a listenerek map-ként (objektumként) vannak megadva.
+# ----- Gateway -----
 gateway:
   enabled: true
-  name: "gateway-traefik-internal"         # A Kubernetes Gateway erőforrás neve
-  # namespace: "traefik"                  # Ha a Traefik a 'traefik' névtérben fut, ez az alapértelmezett
+  name: "gateway-traefik-internal"        
   listeners:
-    web: # A listener neve a kulcs
-      port: 8000                           # Ennek meg kell egyeznie a `ports.web.port` értékével
-      protocol: HTTP                       # Protokoll
-      hostname: "*.szilardshome.com"       # Hostname
-      # Az allowedRoutes-t a chart valószínűleg a `namespacePolicy` kulccsal kezeli,
-      # vagy egy komplexebb objektummal. A default values `namespacePolicy` stringet vár.
-      # Ha "All" a cél:
-      allowedRoutes: # Próbáljuk meg ezt a struktúrát, ami közelebb áll a Gateway API spec-hez
-        namespaces:
-          from: "All"
-      # Ha a fenti nem működik, a chart lehet, hogy ezt várja:
-      # namespacePolicy: "All" # Ez a default values.yaml kommentjei alapján egy lehetőség
-    websecure: # A listener neve a kulcs
-      port: 8443                           # Ennek meg kell egyeznie a `ports.websecure.port` értékével
-      protocol: HTTPS                      # Protokoll - KRITIKUS a hiba miatt!
-      hostname: "*.szilardshome.com"       # Hostname
+    web: 
+      port: 8000                           
+      protocol: HTTP                       
+      hostname: "*.szilardshome.com"       
       allowedRoutes:
         namespaces:
           from: "All"
-      # TLS beállítások KÖZVETLENÜL a listener alatt, a default values.yaml kommentjei alapján:
-      mode: Terminate                      # TLS lezárási mód
-      certificateRefs:                     # Tanúsítvány hivatkozások (lista)
-        - name: tls-internal-cert          # A Secret neve
-          kind: Secret                     # A Secret kind-ja (fontos lehet a template számára)
-          # group: ""                      # Üres string a core API group esetén (elhagyható)
+    websecure:
+      port: 8443                          
+      protocol: HTTPS                      
+      hostname: "*.szilardshome.com"       
+      allowedRoutes:
+        namespaces:
+          from: "All"
+      mode: Terminate                     
+      certificateRefs:                    
+        - name: tls-internal-cert          
+          kind: Secret                     
 
-# ----- GatewayClass Erőforrás -----
+# ----- GatewayClass  -----
 gatewayClass:
   enabled: true
-  name: "traefik-internal-class"           # A GatewayClass neve
+  name: "traefik-internal-class" 
 
 # ----- Service -----
 service:

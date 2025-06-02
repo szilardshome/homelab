@@ -4,59 +4,79 @@ globalArguments:
 
 additionalArguments:
   - "--serversTransport.insecureSkipVerify=true"
-  - "--log.level=DEBUG"
+  - "--log.level=DEBUG"                        
 
+# ----- Deployment -----
 deployment:
   enabled: true
-  replicas: 3
-  annotations: {}
-  podAnnotations: {}
-  additionalContainers: []
-  initContainers: []
+  kind: Deployment 
+  replicas: 3      
 
+# ----- Portok (Traefik Entrypoints) -----
 ports:
   web:
+    port: 8000                             
+    exposedPort: 80                        
     redirections:
-      entrypoint:
-        to: websecure
-        priority: 10
+      entryPoint:
+        to: "websecure"                    
+        scheme: "https"                    
+        permanent: true                    
   websecure:
-    http3:
-      enabled: true
-    advertisedPort: 4443
+    port: 8443                            
+    exposedPort: 4443                      
+    advertisedPort: 4443                   
     tls:
-      enabled: true
+      enabled: true                       
+    http3:
+      enabled: true                        
 
+# ----- IngressRoute (Dashboard disabled) -----
 ingressRoute:
   dashboard:
     enabled: false
-    
+
+# ----- Providers -----
 providers:
-  # Disable the Ingress provider (optional)
-  # We do not want to use Ingress objects anymore!
+  kubernetesCRD:
+    enabled: true                          
   kubernetesIngress:
-    enabled: false
-  # Enable the GatewayAPI provider
+    enabled: false                         
   kubernetesGateway:
-    enabled: true
+    enabled: true                          
+
+# ----- Gateway -----
 gateway:
-  # -- When providers.kubernetesGateway.enabled, deploy a default gateway
   enabled: true
-  # -- Set a custom name to gateway
-  name: "gateway-traefik-external"
+  name: "gateway-traefik-external"        
+  listeners:
+    web: 
+      port: 8000                           
+      protocol: HTTP                       
+      hostname: "*.szilardshome.com"       
+      allowedRoutes:
+        namespaces:
+          from: "All"
+    websecure:
+      port: 8443                          
+      protocol: HTTPS                      
+      hostname: "*.szilardshome.com"       
+      allowedRoutes:
+        namespaces:
+          from: "All"
+      mode: Terminate                     
+      certificateRefs:                    
+        - name: tls-external-cert          
+          kind: Secret                     
 
-gatewayClass:  # @schema additionalProperties: false
-  # -- When providers.kubernetesGateway.enabled and gateway.enabled, deploy a default gatewayClass
+# ----- GatewayClass  -----
+gatewayClass:
   enabled: true
-  # -- Set a custom name to GatewayClass
-  name: "traefik-external-class"
+  name: "traefik-external-class" 
 
+# ----- Service -----
 service:
   enabled: true
   type: LoadBalancer
-  annotations: {}
-  labels: {}
   spec:
-    loadBalancerIP: 10.10.4.71 # this should be an IP in the MetalLB range
-  loadBalancerSourceRanges: []
-  externalIPs: []
+    loadBalancerIP: 10.10.4.71           
