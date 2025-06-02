@@ -1,0 +1,20 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+#  - https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.2.0/standard-install.yaml
+#  - https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.2.0/experimental-install.yaml
+  - namespace.yaml
+  - gateway-internal.yaml
+  - gateway-external.yaml
+  - httproute.yaml
+
+
+helmCharts:
+  - name: traefik
+    repo: https://traefik.github.io/charts
+    version: v35.4.0
+    releaseName: traefik
+    namespace: traefik
+    valuesFile: values.yaml
+#    includeCRDs: false

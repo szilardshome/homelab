@@ -20,12 +20,12 @@ spec:
       allowedRoutes:
         namespaces:
           from: All
-      # tls:
-      #   # mode: Terminate 
-      #   certificateRefs:
-      #     - kind: Secret
-      #       name: internal-tls-secret
-      #       # group: ""
+      tls:
+        mode: Terminate 
+        certificateRefs:
+          - kind: Secret
+            name: tls-internal-cert
+            # group: ""
   addresses:
     - type: IPAddress
       value: 10.10.4.70

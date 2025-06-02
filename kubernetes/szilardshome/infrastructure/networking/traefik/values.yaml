@@ -14,7 +14,23 @@ deployment:
   additionalContainers: []
   initContainers: []
 
-## File values.yaml ##
+ports:
+  web:
+    redirections:
+      entrypoint:
+        to: websecure
+        priority: 10
+  websecure:
+    http3:
+      enabled: true
+    advertisedPort: 4443
+    tls:
+      enabled: true
+
+ingressRoute:
+  dashboard:
+    enabled: false
+    
 providers:
   # Disable the Ingress provider (optional)
   # We do not want to use Ingress objects anymore!
