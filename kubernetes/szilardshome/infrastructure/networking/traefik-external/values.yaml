@@ -70,9 +70,9 @@ gateway:
           kind: Secret                     
 
 # ----- GatewayClass  -----
-gatewayClass:
-  enabled: true
-  name: "traefik-external-class" 
+# gatewayClass:
+#   enabled: true
+#   name: "traefik-external-class" 
 
 # ----- Service -----
 service:
