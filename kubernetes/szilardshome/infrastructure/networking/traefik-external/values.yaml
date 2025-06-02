@@ -39,3 +39,13 @@ providers:
   # Enable the GatewayAPI provider
   kubernetesGateway:
     enabled: true
+
+service:
+  enabled: true
+  type: LoadBalancer
+  annotations: {}
+  labels: {}
+  spec:
+    loadBalancerIP: 10.10.4.71 # this should be an IP in the MetalLB range
+  loadBalancerSourceRanges: []
+  externalIPs: []

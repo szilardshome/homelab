@@ -1,0 +1,51 @@
+globalArguments:
+  - "--global.sendanonymoususage=false"
+  - "--global.checknewversion=false"
+
+additionalArguments:
+  - "--serversTransport.insecureSkipVerify=true"
+  - "--log.level=DEBUG"
+
+deployment:
+  enabled: true
+  replicas: 3
+  annotations: {}
+  podAnnotations: {}
+  additionalContainers: []
+  initContainers: []
+
+ports:
+  web:
+    redirections:
+      entrypoint:
+        to: websecure
+        priority: 10
+  websecure:
+    http3:
+      enabled: true
+    advertisedPort: 4443
+    tls:
+      enabled: true
+
+ingressRoute:
+  dashboard:
+    enabled: false
+    
+providers:
+  # Disable the Ingress provider (optional)
+  # We do not want to use Ingress objects anymore!
+  kubernetesIngress:
+    enabled: false
+  # Enable the GatewayAPI provider
+  kubernetesGateway:
+    enabled: true
+
+service:
+  enabled: true
+  type: LoadBalancer
+  annotations: {}
+  labels: {}
+  spec:
+    loadBalancerIP: 10.10.4.70 # this should be an IP in the MetalLB range
+  loadBalancerSourceRanges: []
+  externalIPs: []

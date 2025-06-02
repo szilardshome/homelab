@@ -1,0 +1,16 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+  - gateway-internal.yaml
+  - httproute.yaml
+
+
+helmCharts:
+  - name: traefik
+    repo: https://traefik.github.io/charts
+    version: v35.4.0
+    releaseName: traefik-internal
+    namespace: traefik
+    valuesFile: values.yaml
+

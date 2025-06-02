@@ -9,7 +9,7 @@ spec:
       namespace: traefik
       sectionName: websecure
   hostnames:
-    - "traefik-local.szilardshome.com" 
+    - "traefik-internal.szilardshome.com" 
   rules:
     - matches:
         - path:
