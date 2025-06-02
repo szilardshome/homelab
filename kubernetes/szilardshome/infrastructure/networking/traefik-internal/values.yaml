@@ -32,21 +32,15 @@ ingressRoute:
     enabled: false
     
 providers:
-  # Disable the Ingress provider (optional)
-  # We do not want to use Ingress objects anymore!
   kubernetesIngress:
     enabled: false
-  # Enable the GatewayAPI provider
   kubernetesGateway:
     enabled: true
+
 gateway:
   enabled: true
-  name: "gateway-traefik-internal"
-gatewayClass:  # @schema additionalProperties: false
-  # -- When providers.kubernetesGateway.enabled and gateway.enabled, deploy a default gatewayClass
-  enabled: true
-  # -- Set a custom name to GatewayClass
-  name: "traefik-internal-class"
+  name: "gateway-traefik-internal" 
+
   listeners:
     - name: web
       protocol: HTTP
@@ -57,7 +51,7 @@ gatewayClass:  # @schema additionalProperties: false
           from: All
     - name: websecure
       protocol: HTTPS
-      port: 8443
+      port: 8443 
       hostname: "*.szilardshome.com"
       allowedRoutes:
         namespaces:
@@ -67,7 +61,11 @@ gatewayClass:  # @schema additionalProperties: false
         certificateRefs:
           - kind: Secret
             name: tls-internal-cert
-            group: ""
+            
+gatewayClass: 
+  enabled: true
+  name: "traefik-internal-class"
+
 service:
   enabled: true
   type: LoadBalancer
