@@ -1,9 +1,9 @@
 globalArguments:
-  - "--providers.kubernetesgateway.controllername=szilardshome.com/traefik-gc-external"
   - "--global.sendanonymoususage=false"
   - "--global.checknewversion=false"
 
 additionalArguments:
+  - "--providers.kubernetesgateway.controllername=szilardshome.com/traefik-gc-external"
   - "--serversTransport.insecureSkipVerify=true"
   - "--log.level=DEBUG"                        
 
