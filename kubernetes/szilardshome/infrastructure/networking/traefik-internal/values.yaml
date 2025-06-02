@@ -43,8 +43,7 @@ providers:
   kubernetesIngress:
     enabled: false                         
   kubernetesGateway:
-    enabled: true
-    controllerName: "szilardshome.com/traefik-gc-internal"                      
+    enabled: true                     
 
 # ----- Gateway -----
 gateway:
