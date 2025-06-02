@@ -61,9 +61,6 @@ gateway:
       port: 8443                          
       protocol: HTTPS                      
       hostname: "*.szilardshome.com"       
-      allowedRoutes:
-        namespaces:
-          from: "All"
       mode: Terminate       
       namespacePolicy: All              
       certificateRefs:                    
