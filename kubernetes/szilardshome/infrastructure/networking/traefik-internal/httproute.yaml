@@ -7,7 +7,6 @@ spec:
   parentRefs:
     - name: gateway-traefik-internal
       namespace: traefik
-      sectionName: websecure
   hostnames:
     - "traefik-internal.szilardshome.com" 
   rules:
