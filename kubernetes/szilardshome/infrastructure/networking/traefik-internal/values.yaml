@@ -72,6 +72,9 @@ gatewayClass:
   enabled: true
   name: "traefik-internal-class" 
 
+rbac:
+  enabled: true
+
 # ----- Service -----
 service:
   enabled: true
