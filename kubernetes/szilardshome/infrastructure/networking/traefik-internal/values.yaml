@@ -1,4 +1,5 @@
 globalArguments:
+  - "--providers.kubernetesgateway.controllername=szilardshome.com/traefik-gc-internal"
   - "--global.sendanonymoususage=false"
   - "--global.checknewversion=false"
 
