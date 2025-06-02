@@ -3,6 +3,7 @@ globalArguments:
   - "--global.checknewversion=false"
 
 additionalArguments:
+  - "--providers.kubernetesGateway.experimentalChannel=true"
   - "--serversTransport.insecureSkipVerify=true"
   - "--log.level=DEBUG"                        
 
