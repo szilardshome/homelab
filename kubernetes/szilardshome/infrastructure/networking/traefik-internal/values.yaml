@@ -47,7 +47,27 @@ gatewayClass:  # @schema additionalProperties: false
   enabled: true
   # -- Set a custom name to GatewayClass
   name: "traefik-internal-class"
-
+  listeners:
+    - name: web
+      protocol: HTTP
+      port: 8000
+      hostname: "*.szilardshome.com"
+      allowedRoutes:
+        namespaces:
+          from: All
+    - name: websecure
+      protocol: HTTPS
+      port: 8443
+      hostname: "*.szilardshome.com"
+      allowedRoutes:
+        namespaces:
+          from: All
+      tls:
+        mode: Terminate
+        certificateRefs:
+          - kind: Secret
+            name: tls-internal-cert
+            group: ""
 service:
   enabled: true
   type: LoadBalancer
