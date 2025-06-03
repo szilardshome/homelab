@@ -17,21 +17,16 @@ deployment:
 # ----- Portok (Traefik Entrypoints) -----
 ports:
   web:
-    port: 8000                             
-    exposedPort: 80                        
     redirections:
-      entryPoint:
-        to: "websecure"                    
-        scheme: "https"                    
-        permanent: true                    
+      entrypoint:
+        to: websecure
+        priority: 10
   websecure:
-    port: 8443                            
-    exposedPort: 4443                      
-    advertisedPort: 4443                   
-    tls:
-      enabled: true                       
     http3:
-      enabled: true                        
+      enabled: true
+    advertisedPort: 4443
+    tls:
+      enabled: true                      
 
 # ----- IngressRoute (Dashboard disabled) -----
 ingressRoute:
@@ -69,7 +64,7 @@ gateway:
         - name: tls-internal-cert          
           kind: Secret                     
           namespace: cert-manager
-          
+
 # ----- GatewayClass  -----
 gatewayClass:
   enabled: true
