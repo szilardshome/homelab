@@ -1,109 +1,88 @@
-# ----- Globális Traefik beállítások -----
 globalArguments:
   - "--global.sendanonymoususage=false"
   - "--global.checknewversion=false"
 
-# ----- További indítási argumentumok -----
 additionalArguments:
-  - "--serversTransport.insecureSkipVerify=true" # Figyelem: Biztonsági kockázat!
-  - "--log.level=DEBUG"                         # Fejlesztéshez/hibakereséshez
-  # Egyedi controllerName a belső példányhoz
-  - "--providers.kubernetesgateway.controllername=szilardshome.com/traefik-gc-internal"
-  # Status address konfiguráció a belső példányhoz
   - "--providers.kubernetesgateway.statusaddress.service.namespace=traefik-internal"
-  - "--providers.kubernetesgateway.statusaddress.service.name=traefik-internal-internal" # Ennek a Service-nek léteznie kell, vagy a chartnak ezt kell létrehoznia
+  - "--providers.kubernetesgateway.statusaddress.service.name=traefik-internal-internal"
+  - "--serversTransport.insecureSkipVerify=true"
+  - "--log.level=DEBUG"                        
 
 # ----- Deployment -----
 deployment:
   enabled: true
-  kind: Deployment
-  replicas: 3 # Ahogy kérted
+  kind: Deployment 
+  replicas: 3      
 
 # ----- Portok (Traefik Entrypoints) -----
 ports:
   web:
-    port: 8000                             # Traefik pod ezen a porton figyel (HTTP)
-    exposedPort: 80                        # Service ezen a porton teszi közzé
+    port: 8000                             
+    exposedPort: 80                        
     redirections:
       entryPoint:
-        to: "websecure"
-        scheme: "https"
-        permanent: true
+        to: "websecure"                    
+        scheme: "https"                    
+        permanent: true                    
   websecure:
-    port: 8443                             # Traefik pod ezen a porton figyel (HTTPS)
-    exposedPort: 4443                      # Service ezen a porton teszi közzé (az advertisedPort miatt)
-    advertisedPort: 4443                   # Ahogy korábban beállítottad
+    port: 8443                            
+    exposedPort: 4443                      
+    advertisedPort: 4443                   
     tls:
-      enabled: true                        # TLS engedélyezése ezen a Traefik entrypoint-on
+      enabled: true                       
     http3:
-      enabled: true
+      enabled: true                        
 
-# ----- IngressRoute (Dashboard letiltva) -----
+# ----- IngressRoute (Dashboard disabled) -----
 ingressRoute:
   dashboard:
     enabled: false
 
-instanceLabelOverride: "traefik-internal-traefik-internal"
-
-# ----- Providerek -----
+# ----- Providers -----
 providers:
   kubernetesCRD:
-    enabled: true                          # CRD-k (IngressRoute, Middleware stb.) használatához
+    enabled: true                          
   kubernetesIngress:
-    enabled: false                         # Kubernetes Ingress letiltva
+    enabled: false                         
   kubernetesGateway:
-    enabled: true                          # Gateway API engedélyezve
-    # Label selector a GatewayClass erőforrások szűréséhez
+    enabled: true                  
     labelselector: "app.kubernetes.io/instance=traefik-internal-traefik-internal"
-
-# ----- Gateway Erőforrás (Helm chart hozza létre) -----
+# ----- Gateway -----
 gateway:
   enabled: true
-  name: "gateway-traefik-internal"         # A Kubernetes Gateway erőforrás neve
-  namespace: "traefik-internal"            # A Gateway erőforrás névtere
-  listeners: # Objektum (map)
-    web:
-      port: 8000
-      protocol: HTTP
-      hostname: "*.szilardshome.com"
+  name: "traefik-internal"        
+  listeners:
+    web: 
+      port: 8000                           
+      protocol: HTTP                       
+      hostname: "*.szilardshome.com"       
       allowedRoutes:
         namespaces:
-          from: "Same" # Vagy "All", ha más névterekből is akarsz route-okat csatolni
+          from: "All"
     websecure:
-      port: 8443
-      protocol: HTTPS
-      hostname: "*.szilardshome.com"
-      allowedRoutes:
-        namespaces:
-          from: "Same" # Vagy "All"
-      # TLS beállítások közvetlenül a listener alatt
-      mode: Terminate
-      certificateRefs:
-        - name: tls-internal-cert # A Secret neve
-          kind: Secret            # A Secret kind-ja
-          # namespace: cert-manager # Ha a Secret másik névtérben van, és van ReferenceGrant
-
-# ----- GatewayClass Erőforrás -----
+      port: 8443                          
+      protocol: HTTPS                      
+      hostname: "*.szilardshome.com"       
+      mode: Terminate       
+      namespacePolicy: All              
+      certificateRefs:                    
+        - name: tls-internal-cert          
+          kind: Secret                     
+          namespace: cert-manager
+          
+# ----- GatewayClass  -----
 gatewayClass:
   enabled: true
-  name: "traefik-internal-class"           # A GatewayClass neve
-  labels: # Címkék a GatewayClass-hoz, hogy a labelselector működjön
-    app.kubernetes.io/instance: traefik-internal-traefik-internal
+  name: "traefik-internal" 
 
+rbac:
+  enabled: true
+experimental:
+  kubernetesGateway:
+    enabled: true
 # ----- Service -----
 service:
   enabled: true
   type: LoadBalancer
-  # Itt felülírhatod a Service nevét, ha a statusaddress.service.name ettől eltérőt igényel,
-  # vagy biztosítsd, hogy a Helm release neve (`traefik-internal`) alapján generált service név
-  # (`traefik-internal`) legyen az, amire a statusaddress hivatkozik (ha a `-internal` suffix nem automatikus).
-  # A te esetedben `traefik-internal-internal` a service neve a statusaddressben.
-  # Ha a chart nem engedi a service nevének direkt felülírását, a Helm release nevével kell játszani,
-  # vagy a statusaddress argumentumot kell a generált service névre állítani.
-  # Tegyük fel, hogy a Helm release neve `traefik-internal` és a chart a service-t `traefik-internal` néven hozza létre.
-  # Ekkor a statusaddress service.name is `traefik-internal` kellene legyen.
-  # Ha a service neve `traefik-internal-internal` kell legyen, és a chart ezt nem így nevezi el,
-  # akkor a `fullnameOverride` vagy `nameOverride` opciókat kell keresni a chartban a service elnevezéséhez.
-  # Most az általad megadott IP-t használom:
   spec:
-    loadBalancerIP: 10.10.4.70
+    loadBalancerIP: 10.10.4.70             
