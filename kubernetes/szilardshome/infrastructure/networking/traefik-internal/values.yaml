@@ -36,7 +36,8 @@ providers:
   kubernetesCRD:
     enabled: true                          
   kubernetesIngress:
-    enabled: false                         
+    enabled: false      
+  kubernetesGateway: {}                   
 
 # ----- Service -----
 service:
