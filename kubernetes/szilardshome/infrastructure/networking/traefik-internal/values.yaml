@@ -3,7 +3,8 @@ globalArguments:
   - "--global.checknewversion=false"
 
 additionalArguments:
-  - "--providers.kubernetesGateway.experimentalChannel=true"
+  - "--providers.kubernetesgateway.statusaddress.service.namespace=traefik-internal"
+  - "--providers.kubernetesgateway.statusaddress.service.name=traefik-internal-internal"
   - "--serversTransport.insecureSkipVerify=true"
   - "--log.level=DEBUG"                        
 
@@ -44,13 +45,12 @@ providers:
   kubernetesIngress:
     enabled: false                         
   kubernetesGateway:
-    enabled: true        
-    experimentalChannel: true             
-
+    enabled: true                  
+    labelselector: "app.kubernetes.io/instance=traefik-internal-traefik-internal"
 # ----- Gateway -----
 gateway:
   enabled: true
-  name: "gateway-traefik-internal"        
+  name: "traefik-internal"        
   listeners:
     web: 
       port: 8000                           
@@ -73,12 +73,13 @@ gateway:
 gatewayClass:
   enabled: true
   name: "traefik-internal-class" 
+  labels: # Címkék a GatewayClass-hoz, hogy a labelselector működjön
+    app.kubernetes.io/instance: traefik-internal-traefik-internal  
 
 rbac:
   enabled: true
 experimental:
   kubernetesGateway:
-    # -- Enable traefik experimental GatewayClass CRD
     enabled: true
 # ----- Service -----
 service:
