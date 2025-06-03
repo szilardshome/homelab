@@ -6,7 +6,7 @@ resources:
   - namespace.yaml
   - reference-grant.yaml
   - gateway-class.yaml
-  - gateway.yaml
+  - gateway-internal.yaml
 
 helmCharts:
   - name: traefik
