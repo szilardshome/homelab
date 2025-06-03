@@ -3,8 +3,6 @@ globalArguments:
   - "--global.checknewversion=false"
 
 additionalArguments:
-  - "--providers.kubernetesgateway.statusaddress.service.namespace=traefik-internal"
-  - "--providers.kubernetesgateway.statusaddress.service.name=traefik-internal"
   - "--serversTransport.insecureSkipVerify=true"
   - "--log.level=DEBUG"                        
 
@@ -39,42 +37,7 @@ providers:
     enabled: true                          
   kubernetesIngress:
     enabled: false                         
-  kubernetesGateway:
-    enabled: true                  
-    labelselector: "app.kubernetes.io/instance=traefik-internal"
-# ----- Gateway -----
-gateway:
-  enabled: true
-  name: "traefik-internal"        
-  listeners:
-    web: 
-      port: 8000                           
-      protocol: HTTP                       
-      hostname: "*.szilardshome.com"       
-      allowedRoutes:
-        namespaces:
-          from: "All"
-    websecure:
-      port: 8443                          
-      protocol: HTTPS                      
-      hostname: "*.szilardshome.com"       
-      mode: Terminate       
-      namespacePolicy: All              
-      certificateRefs:                    
-        - name: tls-internal-cert          
-          kind: Secret                     
-          namespace: cert-manager
 
-# ----- GatewayClass  -----
-gatewayClass:
-  enabled: true
-  name: "traefik-internal" 
-
-rbac:
-  enabled: true
-experimental:
-  kubernetesGateway:
-    enabled: true
 # ----- Service -----
 service:
   enabled: true
