@@ -60,7 +60,7 @@ gateway:
           - name: tls-internal-cert
             kind: Secret
             namespace: cert-manager
-      mode: Terminate
+        mode: Terminate
 
 # ----- Service -----
 service:
