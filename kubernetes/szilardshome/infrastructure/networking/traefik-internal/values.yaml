@@ -55,12 +55,11 @@ gateway:
       hostname: "*.szilardshome.com"
       protocol: HTTPS
       namespacePolicy: All
-      tls:
-        certificateRefs:
-          - name: tls-internal-cert
-            kind: Secret
-            namespace: cert-manager
-        mode: Terminate
+      certificateRefs:
+        - name: tls-internal-cert
+          kind: Secret
+          namespace: cert-manager
+      mode: Terminate
 
 # ----- Service -----
 service:
