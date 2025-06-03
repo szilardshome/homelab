@@ -39,7 +39,7 @@ providers:
     enabled: false      
   kubernetesGateway:
     enabled: true
-    name: traefik-internal-gateway-class              
+    name: "traefik-internal-gateway-class"              
 
 # ----- Service -----
 service:
