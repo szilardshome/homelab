@@ -5,7 +5,7 @@ metadata:
   namespace: traefik-internal
 spec:
   parentRefs:
-    - name: gateway-traefik-internal
+    - name: traefik-internal
       namespace: traefik-internal
   hostnames:
     - "traefik-internal.szilardshome.com" 
