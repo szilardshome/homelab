@@ -4,7 +4,7 @@ globalArguments:
 
 additionalArguments:
   - "--providers.kubernetesgateway.statusaddress.service.namespace=traefik-internal"
-  - "--providers.kubernetesgateway.statusaddress.service.name=traefik-internal-internal"
+  - "--providers.kubernetesgateway.statusaddress.service.name=traefik-internal"
   - "--serversTransport.insecureSkipVerify=true"
   - "--log.level=DEBUG"                        
 
