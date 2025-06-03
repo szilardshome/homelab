@@ -41,7 +41,7 @@ providers:
     enabled: false                         
   kubernetesGateway:
     enabled: true                  
-    labelselector: "app.kubernetes.io/instance=traefik-internal-traefik-internal"
+    labelselector: "app.kubernetes.io/instance=traefik-internal"
 # ----- Gateway -----
 gateway:
   enabled: true
