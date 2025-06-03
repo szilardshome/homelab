@@ -43,6 +43,8 @@ ingressRoute:
   dashboard:
     enabled: false
 
+instanceLabelOverride: "traefik-internal-traefik-internal"
+
 # ----- Providerek -----
 providers:
   kubernetesCRD:
