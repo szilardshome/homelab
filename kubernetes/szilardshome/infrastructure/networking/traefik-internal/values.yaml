@@ -38,7 +38,8 @@ providers:
   kubernetesIngress:
     enabled: false      
   kubernetesGateway:
-    enabled: true                  
+    enabled: true
+    name: traefik-internal-gateway-class              
 
 # ----- Service -----
 service:

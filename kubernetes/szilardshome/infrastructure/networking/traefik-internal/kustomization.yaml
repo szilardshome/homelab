@@ -5,7 +5,6 @@ resources:
   - httproute.yaml
   - namespace.yaml
   - reference-grant.yaml
-  - gateway-class.yaml
   - gateway-internal.yaml
 
 helmCharts:
