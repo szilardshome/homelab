@@ -4,6 +4,7 @@ kind: Kustomization
 resources:
   - httproute.yaml
   - namespace.yaml
+  - reference-grant.yaml
 
 helmCharts:
   - name: traefik
