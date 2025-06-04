@@ -12,8 +12,6 @@ kind: Gateway
 metadata:
   name: traefik-internal
   namespace: traefik-internal
-  annotations:
-    cert-manager.io/cluster-issuer: cloudflare-cluster-issuer
 spec:
   gatewayClassName: traefik-internal
   listeners:
