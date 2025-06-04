@@ -3,9 +3,11 @@ kind: HTTPRoute
 metadata:
   name: traefik-dashboard-external-route 
   namespace: traefik-external
+  annotations:
+    external-dns.alpha.kubernetes.io/target: "10.10.4.61"
 spec:
   parentRefs:
-    - name: gateway-traefik-external
+    - name: gateway-external
       namespace: traefik-external
   hostnames:
     - "traefik-external.szilardshome.com" 
@@ -18,4 +20,4 @@ spec:
         - name: api@internal
           kind: TraefikService
           group: traefik.io 
-          port: 8080
+          port: 8081

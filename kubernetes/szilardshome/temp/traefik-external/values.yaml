@@ -14,22 +14,20 @@ deployment:
 
 # ----- Portok (Traefik Entrypoints) -----
 ports:
+  traefik:
+    port: 8081
   web:
-    port: 8000                             
-    exposedPort: 80                        
     redirections:
-      entryPoint:
+      entrypoint:
         to: "websecure"                    
         scheme: "https"                    
-        permanent: true                    
+        permanent: true   
   websecure:
-    port: 8443                            
-    exposedPort: 4443                      
-    advertisedPort: 4443                   
-    tls:
-      enabled: true                       
     http3:
-      enabled: true                        
+      enabled: true
+    advertisedPort: 4443
+    tls:
+      enabled: true                      
 
 # ----- IngressRoute (Dashboard disabled) -----
 ingressRoute:
@@ -41,42 +39,46 @@ providers:
   kubernetesCRD:
     enabled: true                          
   kubernetesIngress:
-    enabled: false                         
+    enabled: false      
   kubernetesGateway:
-    enabled: true                          
+    enabled: true
+    statusAddress:
+      # -- This IP will get copied to the Gateway status.addresses, and currently only supports one IP value (IPv4 or IPv6).
+      ip: "10.10.4.61"
+      service:
+          enabled: false
+          name: ""
+          namespace: ""
+            
+gatewayClass:  # @schema additionalProperties: false
+  # -- When providers.kubernetesGateway.enabled and gateway.enabled, deploy a default gatewayClass
+  enabled: true
+  # -- Set a custom name to GatewayClass
+  name: traefik-external-gateway-class  
 
-# ----- Gateway -----
 gateway:
   enabled: true
-  name: "gateway-traefik-external"        
+  name: "gateway-external"
   listeners:
-    web: 
-      port: 8000                           
-      protocol: HTTP                       
-      hostname: "*.szilardshome.com"       
-      allowedRoutes:
-        namespaces:
-          from: "All"
+    web:
+      port: 8000
+      hostname: "*.szilardshome.com"
+      protocol: HTTP
+      namespacePolicy: All
     websecure:
-      port: 8443                          
-      protocol: HTTPS                      
-      hostname: "*.szilardshome.com"       
-      allowedRoutes:
-        namespaces:
-          from: "All"
-      mode: Terminate                     
-      certificateRefs:                    
-        - name: tls-external-cert          
-          kind: Secret                     
-          namespace: "cert-manager"
-# ----- GatewayClass  -----
-gatewayClass:
-  enabled: true
-  name: "traefik-external-class" 
+      port: 8443
+      hostname: "*.szilardshome.com"
+      protocol: HTTPS
+      namespacePolicy: All
+      certificateRefs:
+        - name: tls-external-cert
+          kind: Secret
+          namespace: cert-manager
+      mode: Terminate
 
 # ----- Service -----
 service:
   enabled: true
   type: LoadBalancer
   spec:
-    loadBalancerIP: 10.10.4.71           
+    loadBalancerIP: 10.10.4.61         

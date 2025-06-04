@@ -4,7 +4,7 @@ kind: Kustomization
 resources:
   - httproute.yaml
   - namespace.yaml
-
+  - reference-grant.yaml
 
 helmCharts:
   - name: traefik
@@ -13,4 +13,4 @@ helmCharts:
     releaseName: traefik-external
     namespace: traefik-external
     valuesFile: values.yaml
-#    includeCRDs: false
+
