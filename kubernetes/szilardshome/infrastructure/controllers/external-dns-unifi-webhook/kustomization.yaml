@@ -4,6 +4,7 @@ kind: Kustomization
 resources:
   - namespace.yaml
   - external-dns-unifi-secret.yaml
+  - rbac.yaml
 
 
 helmCharts:
