@@ -36,4 +36,4 @@ policy: sync
 sources: ["ingress", "service", "gateway-httproute"]
 txtOwnerId: default
 txtPrefix: k8s.
-domainFilters: ["szilardshome.com"] # replace with your domain
+domainFilters: ["szilardshome.com"]
