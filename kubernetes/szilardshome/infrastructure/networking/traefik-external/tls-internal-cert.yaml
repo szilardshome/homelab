@@ -1,0 +1,14 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: "tls-external-cert"
+  namespace: "traefik-external"
+spec:
+  secretName: "tls-external-cert"
+  issuerRef:
+    name: "cloudflare-cluster-issuer"
+    kind: ClusterIssuer
+  commonName: "szilardshome.com"
+  dnsNames:
+  - "szilardshome.com"
+  - "*.szilardshome.com"
