@@ -40,7 +40,9 @@ providers:
     enabled: false      
   kubernetesGateway:
     enabled: true
-
+    statusAddress:
+      # -- This IP will get copied to the Gateway status.addresses, and currently only supports one IP value (IPv4 or IPv6).
+      ip: "10.10.4.60"
 gatewayClass:  # @schema additionalProperties: false
   # -- When providers.kubernetesGateway.enabled and gateway.enabled, deploy a default gatewayClass
   enabled: true
