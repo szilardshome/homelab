@@ -13,6 +13,9 @@ metadata:
   name: traefik-internal
   namespace: traefik-internal
 spec:
+  addresses:
+  - type: IPAddress
+    value: 10.10.4.71
   gatewayClassName: traefik-internal
   listeners:
     - name: websecure
