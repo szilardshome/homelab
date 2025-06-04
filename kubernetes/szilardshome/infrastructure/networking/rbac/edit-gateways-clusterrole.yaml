@@ -21,6 +21,7 @@ rules:
       - tcproutes
       - tlsroutes
       - referencegrants
+      - grpcroutes 
     verbs:
       - get
       - list
