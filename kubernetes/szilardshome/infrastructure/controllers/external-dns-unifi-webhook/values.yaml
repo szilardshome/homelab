@@ -33,7 +33,7 @@ provider:
 extraArgs:
   - --ignore-ingress-tls-spec
 policy: sync
-sources: ["ingress", "service"]
+sources: ["ingress", "service", "httpRoute"]
 txtOwnerId: default
 txtPrefix: k8s.
 domainFilters: ["szilardshome.com"] # replace with your domain
