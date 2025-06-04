@@ -1,5 +1,5 @@
 fullnameOverride: external-dns-unifi
-logLevel: &logLevel info
+logLevel: &logLevel debug
 provider:
   name: webhook
   webhook:
