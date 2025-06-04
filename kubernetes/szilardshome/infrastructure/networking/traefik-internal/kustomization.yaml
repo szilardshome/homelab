@@ -5,7 +5,6 @@ resources:
   - httproute.yaml
   - namespace.yaml
   - tls-internal-cert.yaml
-  - internal-gateway.yaml
   - internal-clusterrolebinding.yaml
 
 helmCharts:

@@ -17,6 +17,8 @@ deployment:
 
 # ----- Portok (Traefik Entrypoints) -----
 ports:
+  traefik:
+    port: 8081
   web:
     redirections:
       entrypoint:
@@ -41,10 +43,39 @@ providers:
     enabled: true                          
   kubernetesIngress:
     enabled: false      
+  kubernetesGateway:
+    enabled: true
+    
+gatewayClass:  # @schema additionalProperties: false
+  # -- When providers.kubernetesGateway.enabled and gateway.enabled, deploy a default gatewayClass
+  enabled: true
+  # -- Set a custom name to GatewayClass
+  name: traefik-internal
+  labels:
+    gatewayclass.szilardshome.com/type: traefik-internal
+
+gateway:
+  enabled: true
+  name: "traefik-internal"
+  listeners:
+    web:
+      port: 8000
+      hostname: "*.szilardshome.com"
+      protocol: HTTP
+      namespacePolicy: All
+    websecure:
+      port: 8443
+      hostname: "*.szilardshome.com"
+      protocol: HTTPS
+      namespacePolicy: All
+      certificateRefs:
+        - name: tls-external-cert
+          kind: Secret
+      mode: Terminate
 
 # ----- Service -----
 service:
   enabled: true
   type: LoadBalancer
   spec:
-    loadBalancerIP: 10.10.4.60         
+    loadBalancerIP: 10.10.4.60       
