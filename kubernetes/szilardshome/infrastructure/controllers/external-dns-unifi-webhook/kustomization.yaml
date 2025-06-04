@@ -9,7 +9,7 @@ resources:
 helmCharts:
   - name: external-dns
     repo: https://kubernetes-sigs.github.io/external-dns/
-    version: 0.17.0
+    version: v0.17.0
     releaseName: external-dns-unifi-webhook
     namespace: external-dns-unifi-webhook
     valuesFile: values.yaml
