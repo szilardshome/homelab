@@ -20,7 +20,8 @@ ports:
     redirections:
       entrypoint:
         to: websecure
-        priority: 10
+        scheme: https
+        permanent: true 
   websecure:
     http3:
       enabled: true
