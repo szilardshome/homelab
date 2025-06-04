@@ -45,7 +45,7 @@ providers:
     enabled: false      
   kubernetesGateway:
     enabled: true
-    
+
 gatewayClass:  # @schema additionalProperties: false
   # -- When providers.kubernetesGateway.enabled and gateway.enabled, deploy a default gatewayClass
   enabled: true
@@ -69,7 +69,7 @@ gateway:
       protocol: HTTPS
       namespacePolicy: All
       certificateRefs:
-        - name: tls-external-cert
+        - name: tls-internal-cert
           kind: Secret
       mode: Terminate
 
