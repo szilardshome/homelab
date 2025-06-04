@@ -4,7 +4,10 @@ globalArguments:
 
 additionalArguments:
   - "--serversTransport.insecureSkipVerify=true"
-  - "--log.level=DEBUG"                        
+  - "--log.level=DEBUG"
+  - "--experimental.kubernetesgateway"
+  - "--providers.kubernetesgateway"
+  - "--providers.kubernetesgateway.labelselector=gatewayclass.szilardshome.com/type=traefik-internal"                          
 
 # ----- Deployment -----
 deployment:
@@ -38,40 +41,6 @@ providers:
     enabled: true                          
   kubernetesIngress:
     enabled: false      
-  kubernetesGateway:
-    enabled: true
-    statusAddress:
-      # -- This IP will get copied to the Gateway status.addresses, and currently only supports one IP value (IPv4 or IPv6).
-      ip: "10.10.4.60"
-      service:
-          enabled: false
-          name: ""
-          namespace: ""      
-gatewayClass:  # @schema additionalProperties: false
-  # -- When providers.kubernetesGateway.enabled and gateway.enabled, deploy a default gatewayClass
-  enabled: true
-  # -- Set a custom name to GatewayClass
-  name: traefik-interal-gateway-class             
-
-gateway:
-  enabled: true
-  name: "gateway-internal"
-  listeners:
-    web:
-      port: 8000
-      hostname: "*.szilardshome.com"
-      protocol: HTTP
-      namespacePolicy: All
-    websecure:
-      port: 8443
-      hostname: "*.szilardshome.com"
-      protocol: HTTPS
-      namespacePolicy: All
-      certificateRefs:
-        - name: tls-internal-cert
-          kind: Secret
-          namespace: cert-manager
-      mode: Terminate
 
 # ----- Service -----
 service:
