@@ -42,7 +42,7 @@ providers:
     enabled: false      
   kubernetesGateway:
     enabled: true
-    name: "traefik-external-gateway-class"              
+    name: traefik-external-gateway-class              
 
 gateway:
   enabled: true
