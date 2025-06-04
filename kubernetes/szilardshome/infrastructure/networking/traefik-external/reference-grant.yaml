@@ -1,0 +1,14 @@
+apiVersion: gateway.networking.k8s.io/v1beta1
+kind: ReferenceGrant   
+metadata:
+  name: allow-traefik-external-to-cert-manager-secrets 
+  namespace: cert-manager 
+spec:
+  from:
+    - group: gateway.networking.k8s.io
+      kind: Gateway
+      namespace: traefik-external 
+  to:
+    - group: "" 
+      kind: Secret
+      name: tls-external-cert 
