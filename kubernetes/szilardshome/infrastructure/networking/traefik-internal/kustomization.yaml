@@ -4,7 +4,7 @@ kind: Kustomization
 resources:
   - httproute.yaml
   - namespace.yaml
-  - reference-grant.yaml
+  - tls-internal-cert.yaml
   - internal-gateway.yaml
   - internal-clusterrolebinding.yaml
 
