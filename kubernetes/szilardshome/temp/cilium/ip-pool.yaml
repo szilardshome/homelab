@@ -1,8 +1,0 @@
-apiVersion: cilium.io/v2alpha1
-kind: CiliumLoadBalancerIPPool
-metadata:
-  name: main-pool
-spec:
-  blocks:
-    - cidr: "10.10.4.60/28"  # Use "blocks" instead of "cidrs" Usable IPs: 192.168.10.17 to 192.168.10.30
-  allowFirstLastIPs: "No"  # Required in Cilium 1.16+ if reserving first/last IPs

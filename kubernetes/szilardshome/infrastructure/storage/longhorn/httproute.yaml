@@ -3,12 +3,14 @@ kind: HTTPRoute
 metadata:
   name: longhorn
   namespace: longhorn-system
+  annotations:
+    external-dns.alpha.kubernetes.io/target: "10.10.4.60"
 spec:
   parentRefs:
-    - name: gateway-internal # Assuming you have an internal gateway, adjust if needed
-      namespace: gateway # Assuming your gateway is in the 'gateway' namespace
+    - name: traefik-internal
+      namespace: traefik-internal
   hostnames:
-    - "longhorn.szilardshome.com" # You can change this hostname
+    - "longhorn-internal.szilardshome.com" # You can change this hostname
   rules:
     - matches:
         - path:
@@ -17,5 +19,5 @@ spec:
       backendRefs:
         - name: longhorn-frontend # Default Longhorn UI service name
           namespace: longhorn-system
-          port: 80 # Default Longhorn UI port
+          port: 80
           weight: 1
