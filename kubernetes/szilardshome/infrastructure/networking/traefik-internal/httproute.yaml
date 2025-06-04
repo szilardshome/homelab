@@ -8,7 +8,6 @@ metadata:
 spec:
   parentRefs:
     - name: gateway-internal
-      namespace: traefik-internal
   hostnames:
     - "traefik-internal.szilardshome.com" 
   rules:
