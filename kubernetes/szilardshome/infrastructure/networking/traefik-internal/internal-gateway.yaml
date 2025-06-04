@@ -27,5 +27,4 @@ spec:
         certificateRefs:
           - name: tls-internal-cert
             kind: Secret
-            namespace: cert-manager
             group: ""
