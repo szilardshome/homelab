@@ -9,7 +9,6 @@ spec:
   parentRefs:
     - name: traefik-internal
       namespace: traefik-internal
-      sectionName: https
   hostnames:
     - "it-tools-internal.szilardshome.com"
   rules:
