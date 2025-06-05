@@ -1,0 +1,23 @@
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: it-tools-internal-route
+  namespace: it-tools
+  annotations:
+    external-dns.alpha.kubernetes.io/target: "10.10.4.60"
+spec:
+  parentRefs:
+    - name: traefik-internal
+      namespace: traefik-internal
+      sectionName: https
+  hostnames:
+    - "it-tools-internal.szilardshome.com"
+  rules:
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /
+      backendRefs:
+        - name: it-tools
+          port: 8080
+          weight: 1
