@@ -1,0 +1,13 @@
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: pvc-qbittorrent-data
+  namespace: qbittorrent
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 21Ti
+  volumeName: pv-qbittorrent-data
+  storageClassName: smb-k3s
