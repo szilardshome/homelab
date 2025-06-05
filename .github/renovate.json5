@@ -39,7 +39,7 @@
   "packageRules": [
     {
       "matchUpdateTypes": ["minor", "patch"],
-      "matchManagers": ["helm-values", "kubernetes", "kustomize", "argocd"], /
+      "matchManagers": ["helm-values", "kubernetes", "kustomize", "argocd"],
       "automerge": true,
       "automergeType": "branch"
     },
