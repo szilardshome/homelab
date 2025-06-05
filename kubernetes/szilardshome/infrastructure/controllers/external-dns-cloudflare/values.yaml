@@ -1,0 +1,15 @@
+fullnameOverride: external-dns-cloudflare
+provider: 
+  name: cloudflare
+env:
+  - name: CF_API_TOKEN
+    valueFrom:
+      secretKeyRef:
+        name: cloudflare-api-token
+        key: api-key
+
+policy: sync
+sources: ["ingress", "service", "gateway-httproute"]
+txtOwnerId: default
+txtPrefix: k3s.
+domainFilters: ["szilardshome.com"]
