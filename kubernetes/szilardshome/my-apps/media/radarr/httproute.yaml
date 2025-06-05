@@ -17,7 +17,7 @@ spec:
             type: PathPrefix
             value: /
       backendRefs:
-        - name: webui
+        - name: http
           namespace: radarr
           port: 7878
           weight: 1
