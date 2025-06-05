@@ -48,7 +48,7 @@ spec:
       volumes:
         - name: radarr-config
           persistentVolumeClaim:
-            claimName: radarr-config-pvc
+            claimName: pvc-radarr-config
         - name: data
           persistentVolumeClaim:
-            claimName: pvc-radarr-smb
+            claimName: pvc-radarr-data
