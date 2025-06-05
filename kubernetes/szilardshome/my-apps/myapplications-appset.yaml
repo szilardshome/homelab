@@ -23,7 +23,7 @@ spec:
       source:
         plugin:
           name: kustomize-build-with-helm
-        repoURL: hhttps://github.com/szilardshome/homelab
+        repoURL: https://github.com/szilardshome/homelab
         targetRevision: HEAD
         path: '{{path}}'
       destination:
