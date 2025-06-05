@@ -18,6 +18,26 @@ spec:
       labels:
         app.kubernetes.io/name: radarr
     spec:
+      # ======================================================================
+      # INIT CONTAINER
+      # ======================================================================
+      initContainers:
+        - name: modify-radarr-authmethod
+          image: busybox:1.36
+          command: ['sh', '-c']
+          args:
+            - |
+              set -e
+              CONFIG_FILE="/config/config.xml"
+              TARGET_AUTH_METHOD="<AuthenticationMethod>External</AuthenticationMethod>"
+              CURRENT_AUTH_NONE="<AuthenticationMethod>None</AuthenticationMethod>"
+              sed -i "s|$CURRENT_AUTH_NONE|$TARGET_AUTH_METHOD|g" "$CONFIG_FILE" || true
+          volumeMounts:
+            - name: radarr-config      
+              mountPath: /config       
+      # ======================================================================
+      # INIT CONTAINER
+      # ======================================================================
       containers:
         - name: radarr
           image: lscr.io/linuxserver/radarr@sha256:47acec85a0d92d107096088aebe83d1d0a434def34e5bac317fff18ca28741ae
@@ -51,4 +71,4 @@ spec:
             claimName: pvc-radarr-config
         - name: data
           persistentVolumeClaim:
-            claimName: pvc-radarr-data
+            claimName: pvc-radarr-data 
