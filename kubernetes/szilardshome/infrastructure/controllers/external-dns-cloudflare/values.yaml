@@ -1,4 +1,3 @@
-fullnameOverride: external-dns-cloudflare
 provider: 
   name: cloudflare
 env:
@@ -8,8 +7,8 @@ env:
         name: cloudflared-api-token
         key: api-key
 
-policy: sync
-sources: ["ingress", "service", "gateway-httproute"]
-txtOwnerId: default
-txtPrefix: k3s.
-domainFilters: ["szilardshome.com"]
+# policy: sync
+# sources: ["ingress", "service", "gateway-httproute"]
+# txtOwnerId: default
+# txtPrefix: k3s.
+# domainFilters: ["szilardshome.com"]
