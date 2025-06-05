@@ -11,7 +11,7 @@ spec:
   accessModes:
     - ReadWriteMany
   persistentVolumeReclaimPolicy: Retain
-  storageClassName: smb
+  storageClassName: smb-k3s
   mountOptions:
     - dir_mode=0777
     - file_mode=0777

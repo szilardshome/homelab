@@ -10,4 +10,4 @@ spec:
     requests:
       storage: 21Ti
   volumeName: pv-radarr-smb
-  storageClassName: smb
+  storageClassName: smb-k3s
