@@ -1,5 +1,6 @@
-provider: 
-  name: cloudflare
+provider: cloudflare
+cloudflare:
+  apiToken: CF_API_TOKEN
 env:
   - name: CF_API_TOKEN
     valueFrom:
