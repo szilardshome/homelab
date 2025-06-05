@@ -27,11 +27,9 @@ spec:
         - name: http
           containerPort: 8080
         resources:
-          # Erőforrás-kérelmek: Mennyi erőforrást garantáltan megkap a konténer
           requests:
-            cpu: "100m" # 0.1 CPU mag
-            memory: "128Mi" # 128 Mebibyte memória
-          # Erőforrás-korlátok: Mennyi erőforrást használhat maximum a konténer
+            cpu: "100m" 
+            memory: "128Mi" 
           limits:
-            cpu: "500m" # 0.5 CPU mag
-            memory: "256Mi" # 256 Mebibyte memória          
+            cpu: "500m" 
+            memory: "256Mi"       
