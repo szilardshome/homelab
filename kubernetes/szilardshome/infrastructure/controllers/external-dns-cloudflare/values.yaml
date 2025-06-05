@@ -5,7 +5,7 @@ env:
     valueFrom:
       secretKeyRef:
         name: cloudflared-api-token
-        key: api-key
+        key: apiKey
 
 # policy: sync
 # sources: ["ingress", "service", "gateway-httproute"]
