@@ -1,80 +1,62 @@
 {
-  $schema: 'https://docs.renovatebot.com/renovate-schema.json',
-  extends: [
-    'config:recommended',
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:recommended"
   ],
-  prHourlyLimit: 3,
-  enabledManagers: [
-    'helm-values',
-    'kubernetes',
-    'kustomize',
-    'argocd',
+  "prHourlyLimit": 3,
+  "enabledManagers": [
+    "helm-values",
+    "kubernetes",
+    "kustomize",
+    "argocd"
   ],
-  argocd: {
-    managerFilePatterns: [
-      '/^infra/.+\\.yaml$/',
-      '/^apps/.+\\.yaml$/',
-      '/^my-apps/.+\\.yaml$/',
-    ],
+
+  "kustomize": {
+    "managerFilePatterns": [
+      "/^kubernetes\\/szilardshome\\/infrastructure\\/(.+\\/)?kustomization\\.ya?ml$/"
+    ]
   },
-  kubernetes: {
-    managerFilePatterns: [
-      '/^infra/.+\\.yaml$/',
-      '/^apps/.+\\.yaml$/',
-      '/^my-apps/.+\\.yaml$/',
-    ],
+
+  "helm-values": {
+    "managerFilePatterns": [
+      "/^kubernetes\\/szilardshome\\/infrastructure\\/(.+\\/)?values\\.yaml$/"
+    ]
   },
-  'helm-values': {
-    managerFilePatterns: [
-      '/^infra/.+/values\\.yaml$/',
-      '/^apps/.+/values\\.yaml$/',
-    ],
+
+  "argocd": {
+    "managerFilePatterns": [
+      "/^kubernetes\\/szilardshome\\/infrastructure\\/infrastructure-components-appset\\.yaml$/",
+      "/^kubernetes\\/szilardshome\\/infrastructure\\/controllers\\/application-set\\.yaml$/"
+    ]
   },
-  kustomize: {
-    managerFilePatterns: [
-      '/(^|/)kustomization\\.ya?ml$/',
-    ],
+
+  "kubernetes": {
+    "managerFilePatterns": [
+      "/^kubernetes\\/szilardshome\\/infrastructure\\/.+\\.yaml$/"
+    ]
   },
-  packageRules: [
+
+  "packageRules": [
     {
-      matchUpdateTypes: [
-        'minor',
-        'patch',
-      ],
-      matchManagers: [
-        'helm-values',
-        'kubernetes',
-        'kustomize',
-        'argocd',
-      ],
-      automerge: true,
-      automergeType: 'branch',
+      "matchUpdateTypes": ["minor", "patch"],
+      "matchManagers": ["helm-values", "kubernetes", "kustomize", "argocd"], /
+      "automerge": true,
+      "automergeType": "branch"
     },
     {
-      matchUpdateTypes: [
-        'major',
-      ],
-      matchManagers: [
-        'helm-values',
-        'kubernetes',
-        'kustomize',
-        'argocd',
-      ],
-      automerge: false,
-      prCreation: 'immediate',
+      "matchUpdateTypes": ["major"],
+      "matchManagers": ["helm-values", "kubernetes", "kustomize", "argocd"],
+      "automerge": false,
+      "prCreation": "immediate"
     },
     {
-      description: 'Enable container digest updates',
-      matchDatasources: [
-        'docker',
-      ],
-      matchUpdateTypes: [
-        'digest',
-      ],
-      enabled: true,
-    },
+      "description": "Enable container digest updates",
+      "matchDatasources": ["docker"],
+      "matchUpdateTypes": ["digest"],
+      "enabled": true
+    }
   ],
-  ignorePaths: [
-    '**/charts/**',
-  ],
+  "ignorePaths": [
+    "**/charts/**"
+  ]
 }
