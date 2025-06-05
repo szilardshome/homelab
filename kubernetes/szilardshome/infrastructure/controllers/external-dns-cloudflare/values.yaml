@@ -8,8 +8,12 @@ env:
         name: cloudflared-api-token
         key: apiKey
 
-# policy: sync
-# sources: ["ingress", "service", "gateway-httproute"]
-# txtOwnerId: default
-# txtPrefix: k3s.
-# domainFilters: ["szilardshome.com"]
+policy: sync
+sources: ["ingress", "service", "gateway-httproute"]
+txtOwnerId: default
+txtPrefix: k3s.
+domainFilters: ["szilardshome.com"]
+extraArgs:
+  - --cloudflare-proxied
+  - --cloudflare-dns-records-per-page=5000
+  # - --default-targets=${YOUR_HOUSE_EXTERNAL_IP}
