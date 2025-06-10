@@ -7,7 +7,6 @@ spec:
   parentRefs:
     - name: traefik-external
       namespace: traefik-external
-      sectionName: websecure
   hostnames:
     - "qbittorrent2.szilardshome.com" 
   rules:
