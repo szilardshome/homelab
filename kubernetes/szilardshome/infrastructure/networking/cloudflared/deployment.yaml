@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cloudflared-tunnel
+  namespace: cloudflared
+  labels:
+    app: cloudflared-tunnel
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cloudflared-tunnel
+  template:
+    metadata:
+      labels:
+        app: cloudflared-tunnel
+    spec:
+      containers:
+        - name: cloudflared
+          image: cloudflare/cloudflared@sha256:14d9c6b01b29d556569446b0cc5c9162dc129a92ce127afe27c3aae4534f8af1
+          command: ["cloudflared", "tunnel", "--no-autoupdate", "run", "--token", "$(TUNNEL_TOKEN)"]
+          env:
+            - name: TUNNEL_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: cloudflare-tunnel-token
+                  key: tunnel-token
+          # volumeMounts:
+            # - name: config-volume
+            #   mountPath: /etc/cloudflared
+          resources:
+            requests:
+              cpu: "50m"
+              memory: "64Mi"
+            limits:
+              cpu: "100m"
+              memory: "128Mi"
+      # volumes:
+        # - name: config-volume
+        #   configMap:
+        #     name: cloudflared-config
