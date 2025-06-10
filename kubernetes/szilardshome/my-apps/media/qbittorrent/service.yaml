@@ -10,8 +10,8 @@ spec:
     protocol: TCP
     targetPort: 8080
   - name: torrrent
-    port: 6881
+    port: 6882
     protocol: TCP
-    targetPort: 6881  
+    targetPort: 6882
   selector:
     app.kubernetes.io/name: qbittorrent
