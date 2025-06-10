@@ -4,6 +4,7 @@ metadata:
   name: qbittorrent
   namespace: qbittorrent
 spec:
+  type: ClusterIP
   ports:
   - name: webui
     port: 8080
