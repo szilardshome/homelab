@@ -9,3 +9,4 @@ resources:
 - pvc-qbittorrent-config.yaml
 - pv-qbittorrent-data.yaml
 - httproute.yaml
+- httproute-external.yaml
