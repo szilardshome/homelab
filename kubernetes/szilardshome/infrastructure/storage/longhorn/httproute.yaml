@@ -4,6 +4,7 @@ metadata:
   name: longhorn
   namespace: longhorn-system
   annotations:
+    external-dns.alpha.kubernetes.io/enabled: "true"
     external-dns.alpha.kubernetes.io/target: "10.10.4.60"
 spec:
   parentRefs:
