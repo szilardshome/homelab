@@ -3,11 +3,6 @@ kind: HTTPRoute
 metadata:
   name: qbittorrent-external-webui-route
   namespace: qbittorrent
-  annotations:
-    external-dns.alpha.kubernetes.io/enabled: true
-    external-dns.alpha.kubernetes.io/hostname: "qbittorrent2.szilardshome.com"
-    external-dns.alpha.kubernetes.io/cloudflare-proxied: 'true'
-    external-dns.alpha.kubernetes.io/target: "00541f57-3443-429e-a5f4-80476532f702.cfargotunnel.com"
 spec:
   parentRefs:
     - name: traefik-external
