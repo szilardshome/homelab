@@ -33,7 +33,7 @@ spec:
             - containerPort: 8080
               name: web-ui
               protocol: TCP
-            - containerPort: 6882
+            - containerPort: 6881
               name: torrent-tcp
               protocol: TCP
           volumeMounts:
