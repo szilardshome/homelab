@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: cloudflared
-          image: cloudflare/cloudflared@sha256:14d9c6b01b29d556569446b0cc5c9162dc129a92ce127afe27c3aae4534f8af1
+          image: cloudflare/cloudflared@sha256:783e0e52ddad1e91f0dba5f305fc7a8dc94afab8b4c8c309bcd17c5a45654dfb
           command: ["cloudflared", "tunnel", "--no-autoupdate", "run", "--token", "$(TUNNEL_TOKEN)"]
           env:
             - name: TUNNEL_TOKEN
