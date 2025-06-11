@@ -37,4 +37,4 @@ policy: sync
 sources: ["ingress", "service", "gateway-httproute"]
 txtOwnerId: szilardshome
 txtPrefix: ""
-domainFilters: [".internal"]
+domainFilters: ["szilardshome.com"]
