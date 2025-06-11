@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: kube-apiserver-vip
+  namespace: kube-system
+  labels:
+    app: kube-apiserver-vip
+spec:
+  type: LoadBalancer
+  loadBalancerIP: 10.10.4.50
+  ports:
+    - name: https
+      port: 6443
+      protocol: TCP
+      targetPort: 6443
+  selector:
+    component: kube-apiserver
+    tier: control-plane
+  sessionAffinity: None

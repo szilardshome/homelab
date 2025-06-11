@@ -2,3 +2,16 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
   - announce.yaml
+  - ip-pool.yaml
+  - l2-policy.yaml
+  - vip-pool.yaml
+  - kube-apiserver-vip.yaml
+  - control-plane-l2-policy.yaml
+helmCharts:
+  - name: cilium
+    repo: https://helm.cilium.io
+    version: 1.17.4
+    releaseName: "cilium"
+    includeCRDs: true
+    namespace: kube-system
+    valuesFile: values.yaml
