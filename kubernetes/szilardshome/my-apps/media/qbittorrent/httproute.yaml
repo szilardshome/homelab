@@ -11,7 +11,7 @@ spec:
     - name: traefik-internal
       namespace: traefik-internal
   hostnames:
-    - "qbittorrent-internal.szilardshome.com" 
+    - "qbittorrent.internal" 
   rules:
     - matches:
         - path:
