@@ -4,21 +4,18 @@ metadata:
   name: qbittorrent
   namespace: qbittorrent
 spec:
-  type: LoadBalancer
   ports:
-  - name: webui
-    port: 8080
-    protocol: TCP
-    targetPort: 8080
-  - name: torrent-tcp 
-    port: 6881
-    protocol: TCP
-    targetPort: 6881
-  - name: torrent-udp #
-    port: 6881
-    protocol: UDP
-    targetPort: 6881
+    - port: 8080
+      protocol: TCP
+      targetPort: http
+      name: http
+    - port: 6881
+      protocol: TCP
+      targetPort: torrent-tcp
+      name: torrent-tcp
+    - port: 6881
+      protocol: UDP
+      targetPort: torrent-udp
+      name: torrent-udp
   selector:
     app.kubernetes.io/name: qbittorrent
-  externalTrafficPolicy: Cluster
-  loadBalancerIP: 10.10.4.75
