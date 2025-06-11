@@ -1,14 +1,14 @@
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
-  name: "tls-internal-cert"
+  name: "tls-internal-wildcard-cert"
   namespace: "traefik-internal"
 spec:
-  secretName: "tls-internal-cert"
+  secretName: "tls-internal-wildcard-cert"
   issuerRef:
     name: "cloudflare-cluster-issuer"
     kind: ClusterIssuer
-  commonName: "szilardshome.com"
+  commonName: "*.internal.szilardshome.com" 
   dnsNames:
-  - "szilardshome.com"
-  - "*.szilardshome.com"
+  - "internal.szilardshome.com"
+  - "*.internal.szilardshome.com"
