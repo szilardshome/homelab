@@ -11,7 +11,7 @@ spec:
     - name: traefik-internal
       namespace: traefik-internal
   hostnames:
-    - "longhorn-internal.szilardshome.com" # You can change this hostname
+    - "longhorn.internal.szilardshome.com" # You can change this hostname
   rules:
     - matches:
         - path:

@@ -11,7 +11,7 @@ spec:
     - name: traefik-internal
       namespace: traefik-internal
   hostnames:
-    - "it-tools-internal.szilardshome.com"
+    - "it-tools.internal.szilardshome.com"
   rules:
     - matches:
         - path:
