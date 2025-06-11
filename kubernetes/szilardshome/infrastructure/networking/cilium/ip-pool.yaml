@@ -1,4 +1,4 @@
-piVersion: cilium.io/v2alpha1
+apiVersion: cilium.io/v2alpha1
 kind: CiliumLoadBalancerIPPool
 metadata:
   name: first-pool
