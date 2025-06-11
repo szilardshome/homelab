@@ -69,7 +69,7 @@ gateway:
       protocol: HTTPS
       namespacePolicy: All
       certificateRefs:
-        - name: tls-internal-cert
+        - name: tls-internal-wildcard-cert
           kind: Secret
       mode: Terminate
 
