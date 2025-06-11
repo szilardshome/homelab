@@ -4,7 +4,6 @@ metadata:
   name: qbittorrent
   namespace: qbittorrent
 spec:
-  type: LoadBalancer
   ports:
   - name: webui
     port: 8080
@@ -20,5 +19,3 @@ spec:
     targetPort: 6881
   selector:
     app.kubernetes.io/name: qbittorrent
-  externalTrafficPolicy: Cluster
-  loadBalancerIP: 10.10.4.75
