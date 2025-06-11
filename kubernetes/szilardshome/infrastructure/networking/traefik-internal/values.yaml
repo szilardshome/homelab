@@ -60,12 +60,12 @@ gateway:
   listeners:
     web:
       port: 8000
-      hostname: "*.szilardshome.com"
+      hostname: "*.internal.szilardshome.com"
       protocol: HTTP
       namespacePolicy: All
     websecure:
       port: 8443
-      hostname: "*.szilardshome.com"
+      hostname: "*.internal.szilardshome.com"
       protocol: HTTPS
       namespacePolicy: All
       certificateRefs:
