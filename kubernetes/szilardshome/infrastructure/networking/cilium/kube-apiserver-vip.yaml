@@ -13,7 +13,4 @@ spec:
       port: 6443
       protocol: TCP
       targetPort: 6443
-  selector:
-    component: kube-apiserver
-    tier: control-plane
   sessionAffinity: None
