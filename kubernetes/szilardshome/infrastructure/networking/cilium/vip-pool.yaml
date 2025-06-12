@@ -5,8 +5,8 @@ metadata:
   namespace: kube-system
 spec:
   blocks:
-    - start: "10.10.4.50"
-      stop: "10.10.4.50"
+    - start: "10.10.4.199"
+      stop: "10.10.4.199"
   serviceSelector:
     matchLabels:
       app: kube-apiserver-vip
