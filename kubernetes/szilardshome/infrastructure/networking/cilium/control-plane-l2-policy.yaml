@@ -13,4 +13,4 @@ spec:
       app: kube-apiserver-vip
   nodeSelector:
     matchLabels:
-      node-role.kubernetes.io/control-plane: ""
+      node-role.kubernetes.io/control-plane: "true"
