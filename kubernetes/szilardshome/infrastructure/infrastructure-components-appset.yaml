@@ -10,9 +10,9 @@ spec:
         repoURL: https://github.com/szilardshome/homelab
         revision: HEAD
         directories:
-          - path: infrastructure/networking/*
-          - path: infrastructure/storage/*
-          - path: infrastructure/controllers/*
+          - path: kubernetes/szilardshome/infrastructure/networking/*
+          - path: kubernetes/szilardshome/infrastructure/storage/*
+          - path: kubernetes/szilardshome/infrastructure/controllers/*
   template:
     metadata:
       name: '{{path.basename}}'
