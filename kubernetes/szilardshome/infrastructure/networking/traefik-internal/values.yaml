@@ -76,4 +76,4 @@ service:
   enabled: true
   type: LoadBalancer
   spec:
-    loadBalancerIP: 10.10.4.60       
+    loadBalancerIP: 10.10.4.70       
