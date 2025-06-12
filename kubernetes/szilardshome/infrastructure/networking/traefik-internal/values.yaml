@@ -46,10 +46,8 @@ providers:
   kubernetesGateway:
     enabled: true
 
-gatewayClass:  # @schema additionalProperties: false
-  # -- When providers.kubernetesGateway.enabled and gateway.enabled, deploy a default gatewayClass
+gatewayClass:  
   enabled: true
-  # -- Set a custom name to GatewayClassq
   name: traefik-internal
   labels:
     gatewayclass.szilardshome.com/type: traefik-internal
