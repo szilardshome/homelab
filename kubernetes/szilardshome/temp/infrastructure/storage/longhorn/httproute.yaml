@@ -1,0 +1,24 @@
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: longhorn
+  namespace: longhorn-system
+  annotations:
+    external-dns.alpha.kubernetes.io/enabled: "true"
+    external-dns.alpha.kubernetes.io/target: "10.10.4.60"
+spec:
+  parentRefs:
+    - name: traefik-internal
+      namespace: traefik-internal
+  hostnames:
+    - "longhorn.internal.szilardshome.com" # You can change this hostname
+  rules:
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /
+      backendRefs:
+        - name: longhorn-frontend # Default Longhorn UI service name
+          namespace: longhorn-system
+          port: 80
+          weight: 1

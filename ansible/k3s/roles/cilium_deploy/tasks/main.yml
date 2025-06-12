@@ -1,0 +1,210 @@
+# ansible/k3s/roles/cilium-deploy/tasks/main.yml
+---
+- name: "Pause to allow the cluster to settle"
+  ansible.builtin.pause:
+    seconds: 60
+    prompt: "Waiting for 60 seconds for the cluster to become ready before deploying Cilium..."
+
+- name: "Add Cilium Helm repository"
+  kubernetes.core.helm_repository:
+    name: cilium
+    repo_url: https://helm.cilium.io
+    kubeconfig: "{{ kubeconfig_path }}" # Ezt a változót be kell állítani a kubeconfig fájl útvonalára
+
+- name: "Deploy Cilium Helm chart with inline values"
+  kubernetes.core.helm:
+    name: cilium
+    chart_ref: cilium/cilium
+    chart_version: 1.17.4
+    release_namespace: kube-system
+    create_namespace: true
+    kubeconfig: "{{ kubeconfig_path }}"
+    values: |
+      cluster:
+        name: szilardshome-cluster
+        id: 1
+      kubeProxyReplacement: true
+      k8sServiceHost: localhost
+      k8sServicePort: 7445
+      securityContext:
+        capabilities:
+          ciliumAgent: [CHOWN, KILL, NET_ADMIN, NET_RAW, IPC_LOCK, SYS_ADMIN, SYS_RESOURCE, DAC_OVERRIDE, FOWNER, SETGID, SETUID]
+          cleanCiliumState: [NET_ADMIN, SYS_ADMIN, SYS_RESOURCE]
+      cgroup:
+        autoMount:
+          enabled: false
+        hostRoot: /sys/fs/cgroup
+      ipam:
+        mode: kubernetes
+      operator:
+        rollOutPods: true
+        replicas: 1
+        resources:
+          limits:
+            cpu: 500m
+            memory: 256Mi
+          requests:
+            cpu: 50m
+            memory: 128Mi
+      rollOutCiliumPods: true
+      resources:
+        limits:
+          cpu: 1000m
+          memory: 1Gi
+        requests:
+          cpu: 200m
+          memory: 512Mi
+      debug:
+        enabled: true
+      k8sClientRateLimit:
+        qps: 20
+        burst: 100
+      l2announcements:
+        enabled: true
+      externalIPs:
+        enabled: true
+      enableCiliumEndpointSlice: true
+      loadBalancer:
+        acceleration: best-effort
+        algorithm: maglev
+      gatewayAPI:
+        enabled: true
+      envoy:
+        securityContext:
+          capabilities:
+            keepCapNetBindService: true
+            envoy: [NET_ADMIN, PERFMON, BPF]
+      hubble:
+        enabled: true
+        relay:
+          enabled: true
+          rollOutPods: true
+        ui:
+          enabled: true
+          rollOutPods: true
+      ingressController:
+        enabled: false
+        default: true
+        loadbalancerMode: shared
+        service:
+          annotations:
+            io.cilium/lb-ipam-ips: 192.168.10.40
+      authentication:
+        enabled: false
+        mutual:
+          spire:
+            enabled: false
+            install:
+              server:
+                dataStorage:
+                  storageClass: cilium-spire-sc
+
+- name: "Create Cilium L2 Announcement Policy (Default)"
+  kubernetes.core.k8s:
+    state: present
+    kubeconfig: "{{ kubeconfig_path }}"
+    definition: |
+      apiVersion: cilium.io/v2alpha1
+      kind: CiliumL2AnnouncementPolicy
+      metadata:
+        name: default-l2-announcement-policy
+        namespace: kube-system
+      spec:
+        externalIPs: true
+        loadBalancerIPs: true
+
+- name: "Create main Cilium IP Pool"
+  kubernetes.core.k8s:
+    state: present
+    kubeconfig: "{{ kubeconfig_path }}"
+    definition: |
+      apiVersion: cilium.io/v2alpha1
+      kind: CiliumLoadBalancerIPPool
+      metadata:
+        name: first-pool
+        namespace: kube-system
+      spec:
+        blocks:
+          - cidr: "10.10.4.59/27"
+        allowFirstLastIPs: "No"
+
+- name: "Create main Cilium L2 Policy"
+  kubernetes.core.k8s:
+    state: present
+    kubeconfig: "{{ kubeconfig_path }}"
+    definition: |
+      apiVersion: cilium.io/v2alpha1
+      kind: CiliumL2AnnouncementPolicy
+      metadata:
+        name: main-l2-policy
+        namespace: kube-system
+      spec:
+        interfaces:
+          - 'e*'
+        loadBalancerIPs: true
+        externalIPs: true
+
+- name: "Create kube-apiserver VIP Service"
+  kubernetes.core.k8s:
+    state: present
+    kubeconfig: "{{ kubeconfig_path }}"
+    definition: |
+      apiVersion: v1
+      kind: Service
+      metadata:
+        name: kube-apiserver-vip
+        namespace: kube-system
+        labels:
+          app: kube-apiserver-vip
+      spec:
+        type: LoadBalancer
+        loadBalancerIP: 10.10.4.50
+        ports:
+          - name: https
+            port: 6443
+            protocol: TCP
+            targetPort: 6443
+        selector:
+          component: kube-apiserver
+          tier: control-plane
+        sessionAffinity: None
+
+- name: "Create Cilium IP Pool for Control-Plane VIP"
+  kubernetes.core.k8s:
+    state: present
+    kubeconfig: "{{ kubeconfig_path }}"
+    definition: |
+      apiVersion: cilium.io/v2alpha1
+      kind: CiliumLoadBalancerIPPool
+      metadata:
+        name: control-plane-vip-pool
+        namespace: kube-system
+      spec:
+        blocks:
+          - start: "10.10.4.50"
+            stop: "10.10.4.50"
+        serviceSelector:
+          matchLabels:
+            app: kube-apiserver-vip
+
+- name: "Create Cilium L2 Policy for Control-Plane"
+  kubernetes.core.k8s:
+    state: present
+    kubeconfig: "{{ kubeconfig_path }}"
+    definition: |
+      apiVersion: cilium.io/v2alpha1
+      kind: CiliumL2AnnouncementPolicy
+      metadata:
+        name: control-plane-l2-policy
+        namespace: kube-system
+      spec:
+        interfaces:
+          - e*
+        loadBalancerIPs: true
+        externalIPs: true
+        serviceSelector:
+          matchLabels:
+            app: kube-apiserver-vip
+        nodeSelector:
+          matchLabels:
+            node-role.kubernetes.io/control-plane: ""

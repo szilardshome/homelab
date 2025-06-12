@@ -1,0 +1,44 @@
+# my-apps/myapplications-appset.yaml
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: my-applications
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
+spec:
+  generators:
+    - git:
+        repoURL: https://github.com/szilardshome/homelab
+        revision: HEAD
+        directories:
+          - path: kubernetes/szilardshome/my-apps/*/*
+  template:
+    metadata:
+      name: '{{path[1]}}-{{path.basename}}'
+      labels:
+        type: application
+    spec:
+      project: my-apps
+      source:
+        plugin:
+          name: kustomize-build-with-helm
+        repoURL: https://github.com/szilardshome/homelab
+        targetRevision: HEAD
+        path: '{{path}}'
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: '{{path.basename}}'
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        retry:
+          limit: 5
+          backoff:
+            duration: 5s
+            factor: 2
+            maxDuration: 3m
+        syncOptions:
+          - CreateNamespace=true
+          - ServerSideApply=true
