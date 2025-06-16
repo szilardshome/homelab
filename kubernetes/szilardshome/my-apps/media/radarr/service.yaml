@@ -4,9 +4,12 @@ metadata:
   name: radarr
   namespace: radarr
 spec:
+  type: LoadBalancer
   ports:
   - port: 7878
     protocol: TCP
     targetPort: 7878
   selector:
     app.kubernetes.io/name: radarr
+  externalTrafficPolicy: Cluster
+  loadBalancerIP: 10.10.4.73 # this is your DNS IP, NOT THE GUI!
