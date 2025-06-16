@@ -1,6 +1,6 @@
 driver:
   name: smb.csi.k8s.io
-  replicas: 3
+  replicas: 1
 storageClasses:
   - name: smb-k3s
     defaultClass: false
