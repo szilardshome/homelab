@@ -5,5 +5,3 @@ commonLabels:
   szilardshome.com: app-management
   app.kubernetes.io/managed-by: argocd
 
-resources:
-
