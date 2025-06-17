@@ -3,3 +3,4 @@ kind: Kustomization
 
 resources:
   - namespace.yaml
+  - infrastructure-components-appset.yaml  
